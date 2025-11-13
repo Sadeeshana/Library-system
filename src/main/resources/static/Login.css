@@ -1,0 +1,29 @@
+/*Style for split screen*/
+
+body,html{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: IBM Plex Sans,sans-serif;
+}
+
+.login-container{
+    display: flex;
+    height: 100vh;
+}
+.left-panel{
+    flex: 1;
+    background-color: darkblue;
+
+    display: flex;
+    justify-content: center;
+    align-items:center;
+}
+.right-panel{
+    flex: 2;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
