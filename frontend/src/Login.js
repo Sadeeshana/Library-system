@@ -3,13 +3,15 @@ import React, { useState } from 'react';
 import './Login.css'; // We'll add styles here
 import Lottie  from "lottie-react";
 import bookAnimation from "./Bookslib.json"
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 function Login() {
     //Functions for the button
     const navigate = useNavigate();
 
-
+    const handleLogin = () => {
+        navigate("/Dashboard");
+    }
 
     // These "state" variables store what the user types
     const [username, setUsername] = useState('');
@@ -31,23 +33,11 @@ function Login() {
                 body: JSON.stringify({username: username, password: password}),
             });
 
-            console.log(response.status);
-
             // 2. Get the JSON response from Spring Boot
             const data = await response.json();
-            console.log(data);
 
-            // 3. *** THIS IS THE FIX ***
-            //    Check the 'status' from your backend
-            if (data.status === 'success') {
-                console.log("Login successfull");
-                // Only navigate if the backend says "success"
-                navigate("/dashboard"); // <-- ADD THIS LINE
-            } else {
-                console.log("Login failed");
-                // If "error", just show the message
-                setMessage(data.message); // <-- ADD THIS else BLOCK
-            }
+            // 3. Show the message from the server
+            setMessage(data.message);
 
         } catch (error) {
             console.error('Error:', error);
@@ -95,18 +85,7 @@ function Login() {
                             />
                         </div>
 
-                        {/*Forget password*/}
-                        <Link to="/forgot-password" className="forgot-link">
-                            Forgot password
-                        </Link>
-
-                        {/*User registration*/}
-                        <Link to="/forgot-password" className="userre">
-                            Register new user
-                        </Link>
-
-
-                        <button type="submit" className="login-button">Login</button>
+                        <button type="submit" className="login-button" onClick={handleLogin}>Login</button>
 
                         {/* This will show "Login Successful!" or "Invalid username..." */}
                         {message && <p className="server-message">{message}</p>}
