@@ -1,120 +1,70 @@
-/* This is the main container you just added in Login.js */
-.login-container {
+/* We just need the form styles. We can add the split-screen later. */
+.right-panel {
     display: flex;
-    min-height: 100vh; /* Make the container fill the full screen height */
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
     font-family: Arial, sans-serif;
 }
 
-/* --- LEFT (Blue) Panel --- */
-.left-panel {
-    flex: 1; /* Takes up 50% of the width */
-    background-color: #0a2d4d; /* Dark blue color */
-
-    /* Center the book image (when you add it) */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* --- RIGHT (White) Panel --- */
-.right-panel {
-    flex: 1; /* Takes up the other 50% */
-    background-color: #ffffff; /* White */
-
-    /* Center the login form */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* --- Form Styles (from your image) --- */
 .form-container {
     width: 100%;
-    max-width: 400px; /* Set a max width for the form */
-    padding: 20px;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .login-title {
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: bold;
-    color: #333;
+    color: #000000;
     margin-bottom: 30px;
+    align-self: flex-start;
+}
+
+.form-container form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .form-label {
-    display: block;
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: bold;
-    color: #555;
+    color: #333;
     margin-bottom: 8px;
+    align-self: flex-start;
 }
 
 .input-container {
+    width: 100%;
     position: relative;
     margin-bottom: 20px;
 }
 
 .form-input {
     width: 100%;
-    padding: 12px 15px;
-    border: 1px solid #ddd;
+    padding: 15px;
+    border: 1px solid #D0D0D0;
     border-radius: 8px;
     font-size: 1rem;
-    box-sizing: border-box; /* Important for padding to work right */
+    box-sizing: border-box;
 }
 
 .login-button {
-    width: 100%;
-    padding: 15px;
+    background-color: #A0C4FF;
+    color: #FFFFFF;
     border: none;
-    border-radius: 8px;
-    background-color: #a0c9e8; /* Light blue */
-    color: #0a2d4d; /* Dark blue text */
+    padding: 15px;
     font-size: 1.1rem;
     font-weight: bold;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.login-button:hover {
-    background-color: #72a9d8;
 }
 
 .server-message {
-    margin-top: 15px;
-    font-size: 0.9rem;
-    color: red; /* Or green for success */
-}
-
-/*Forgot password*/
-.forgot-link{
-    color: #555;
-    text-decoration: none;
-    font-size: 0.9rem;
-
-    align-self: flex-end;
-
-    margin-bottom: 25px;
-
-}
-
-.forgot-link:hover{
-    text-decoration: underline;
-}
-/*User registration*/
-.userre{
-    color: #555;
-    text-decoration: none;
-    font-size: 0.9rem;
-
-    align-self: flex-end;
-
-    margin-left: 170px;
-    margin-bottom: 25px;
-
-
-}
-
-.userre:hover{
-    text-decoration: underline;
+    margin-top: 20px;
+    font-size: 1rem;
+    font-weight: bold;
 }
