@@ -1,6 +1,7 @@
 package com.example.Library.system;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Map;
 
@@ -8,6 +9,8 @@ import java.util.Map;
 @RequestMapping("/api") // <-- 2. All our API URLs will start with /api
 public class LoginController {
 
+    @Autowired
+    private EmployeeRepository employeeRepository;
     /**
      * This method handles the login request from React.
      * It's a POST request that expects JSON.
@@ -19,12 +22,22 @@ public class LoginController {
         String username = loginRequest.getUsername();
         String password = loginRequest.getPassword();
 
+        Employee employee = employeeRepository.findByUsername(username);
+
         // 4. Check the login (this is the same logic)
-        if ("Sadeeshana".equals(username) && "sadeeputha".equals(password)) {
-            // 5. Send a success JSON response
+        if (employee == null) {
+            // User not found
+            return Map.of("status", "error", "message", "Invalid username or password");
+        }
+
+        if (employee.getPassword() != null && employee.getPassword().equals(password)) {
+
+            // Success! Passwords match.
             return Map.of("status", "success", "message", "Login Successful!");
+
         } else {
-            // 6. Send an error JSON response
+
+            // Fail! Passwords do not match.
             return Map.of("status", "error", "message", "Invalid username or password");
         }
     }
