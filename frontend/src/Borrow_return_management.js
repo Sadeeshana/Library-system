@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { FaSearch } from 'react-icons/fa';
-import './Borrow_return_management.css';
+import { FaSearch } from 'react-icons/fa'; // Importing the search icon
+import './Borrow_return_management.css'; // Importing the CSS file
 
-//Static Book Data
+// Mock Data: This would come from your backend API
 const initialBooks = [
     { id: 101, title: 'Matilda', author: 'Roald Dahl', totalCopies: 3, availableCopies: 2, status: 'Available' },
     { id: 102, title: 'Coraline', author: 'Neil Gaiman', totalCopies: 5, availableCopies: 0, status: 'Borrowed' },
@@ -15,20 +15,23 @@ function BorrowReturnManagement() {
     const [books, setBooks] = useState(initialBooks);
     const [searchTerm, setSearchTerm] = useState('');
 
-    // Search Filter
+    // Filter books based on search term (title or author)
     const filteredBooks = books.filter(book =>
         book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         book.author.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    // Borrow Button
+    // Handler for the Borrow button
     const handleBorrow = (bookId) => {
+        // In a real application, you'd send an API request to record the borrow
+        // and update the book's available copies and status.
         console.log(`Attempting to borrow book with ID: ${bookId}`);
 
-        // Inside Borrow Handle
+        // For demonstration: Update state directly
         setBooks(prevBooks =>
             prevBooks.map(book => {
                 if (book.id === bookId && book.availableCopies > 0) {
+                    // Simulate borrowing: decrement available copies, update status if no copies left
                     const newAvailableCopies = book.availableCopies - 1;
                     const newStatus = newAvailableCopies === 0 ? 'Borrowed' : 'Available';
                     alert(`"${book.title}" borrowed successfully!`);
@@ -41,33 +44,10 @@ function BorrowReturnManagement() {
         );
     };
 
-    // Return Button
-    const handleReturn = (bookID) => {
-
-        // Inside Return Handle
-        setBooks(prevBooks =>
-            prevBooks.map(book => {
-                if (book.id === bookID) {
-                    if (book.availableCopies < book.totalCopies) {
-                        const updatedCopies = book.availableCopies + 1;
-                        return {
-                            ...book,
-                            availableCopies: updatedCopies,
-                            status: 'Available'
-                        };
-                    } else {
-                        alert(`All copies of "${book.title}" are already returned.`);
-                    }
-                }
-                return book;
-            })
-        );
-    };
-
-    // Disable Borrow Button
+    // Helper to determine if the Borrow button should be disabled
     const isBorrowDisabled = (availableCopies) => availableCopies === 0;
 
-    // Status Badge Color
+    // Helper to get status class (if you want different colors for Available/Borrowed)
     const getStatusClassName = (status) => {
         return status === 'Available' ? 'status-available' : 'status-borrowed';
     };
@@ -99,7 +79,7 @@ function BorrowReturnManagement() {
                         <th>Total Copies</th>
                         <th>Available Copies</th>
                         <th>Status</th>
-                        <th></th>
+                        <th></th> {/* Empty header for the action button column */}
                     </tr>
                     </thead>
                     <tbody>
@@ -116,23 +96,13 @@ function BorrowReturnManagement() {
                                     </span>
                             </td>
                             <td>
-                                <div className="button-group">
-                                    <button
-                                        className="borrow-button"
-                                        onClick={() => handleBorrow(book.id)}
-                                        disabled={isBorrowDisabled(book.availableCopies)}
-                                    >
-                                        Borrow
-                                    </button>
-
-                                    <button
-                                        className="return-button"
-                                        onClick={() => handleReturn(book.id)}
-                                        disabled={book.availableCopies === book.totalCopies}
-                                    >
-                                        Return
-                                    </button>
-                                </div>
+                                <button
+                                    className="borrow-button"
+                                    onClick={() => handleBorrow(book.id)}
+                                    disabled={isBorrowDisabled(book.availableCopies)}
+                                >
+                                    Borrow
+                                </button>
                             </td>
                         </tr>
                     ))}
