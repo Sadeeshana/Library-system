@@ -1,0 +1,166 @@
+/* Overall Page Layout */
+.borrow-return-page {
+    padding: 0; /* Remove default padding as header handles it */
+    min-height: 100vh;
+    background-color: #f5f7fa; /* Light background for the content area */
+    font-family: Arial, sans-serif;
+}
+
+/* Page Header (Full-width blue bar) */
+.page-header {
+    background-color: #213555; /* Dark blue from your image */
+    color: white;
+    padding: 15px 20px;
+    margin-bottom: 25px; /* Space below the header */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.page-header h2 {
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 500;
+}
+
+/* Search Bar Container */
+.search-bar-container {
+    display: flex;
+    align-items: center;
+    max-width: 700px; /* Constrain search bar width */
+    margin: 0 auto 30px auto; /* Center it and add bottom margin */
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 8px 15px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.search-icon {
+    color: #888;
+    margin-right: 12px;
+    font-size: 1.1rem;
+}
+
+.search-input {
+    flex-grow: 1; /* Input takes up available space */
+    border: none;
+    outline: none;
+    font-size: 1em;
+    padding: 5px 0; /* Vertical padding */
+    color: #333;
+}
+
+.search-input::placeholder {
+    color: #aaa;
+}
+
+/* Book Table Container */
+.book-table-container {
+    max-width: 1100px; /* Max width for the table */
+    margin: 0 auto; /* Center the table */
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    overflow: hidden; /* Ensures rounded corners apply to content */
+    border: 1px solid #e0e0e0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 15px 20px;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+thead th {
+    background-color: #f8f9fa;
+    color: #555;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85em;
+}
+
+tbody tr:hover {
+    background-color: #f9fbfd;
+}
+
+/* Status Badges (similar to previous components) */
+.book-status {
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 0.8em;
+    font-weight: 600;
+    white-space: nowrap; /* Prevent breaking badge text */
+}
+
+.status-available {
+    background-color: #d4edda; /* Light green */
+    color: #155724; /* Dark green text */
+}
+
+.status-borrowed {
+    background-color: #f8d7da; /* Light red/pink */
+    color: #721c24; /* Dark red text */
+}
+
+/* Borrow Button */
+.borrow-button {
+    background-color: #007bff; /* Primary blue */
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 500;
+    transition: background-color 0.2s, opacity 0.2s;
+}
+
+.borrow-button:hover:not(:disabled) {
+    background-color: #0056b3;
+}
+
+.borrow-button:disabled {
+    background-color: #a7d9ff; /* Lighter blue for disabled */
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .page-header {
+        padding: 10px 15px;
+    }
+    .page-header h2 {
+        font-size: 1.4rem;
+    }
+    .search-bar-container {
+        margin: 0 15px 25px 15px;
+        max-width: unset; /* Allow it to take more width */
+    }
+    .book-table-container {
+        margin: 0 15px;
+        max-width: unset;
+        overflow-x: auto; /* Enable horizontal scrolling for the table */
+    }
+    th, td {
+        padding: 10px 15px;
+    }
+    /* Make status badges slightly smaller on small screens */
+    .book-status {
+        font-size: 0.75em;
+        padding: 3px 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-header h2 {
+        font-size: 1.2rem;
+    }
+    .search-input {
+        font-size: 0.9em;
+    }
+}
