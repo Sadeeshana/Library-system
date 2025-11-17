@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
-import { FaSearch } from 'react-icons/fa';
-import './Borrow_return_management.css';
 
-//Static Book Data
 const initialBooks = [
     { id: 101, title: 'Matilda', author: 'Roald Dahl', totalCopies: 3, availableCopies: 2, status: 'Available' },
     { id: 102, title: 'Coraline', author: 'Neil Gaiman', totalCopies: 5, availableCopies: 0, status: 'Borrowed' },
@@ -15,17 +12,14 @@ function BorrowReturnManagement() {
     const [books, setBooks] = useState(initialBooks);
     const [searchTerm, setSearchTerm] = useState('');
 
-    // Search Filter
     const filteredBooks = books.filter(book =>
         book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         book.author.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    // Borrow Button
     const handleBorrow = (bookId) => {
         console.log(`Attempting to borrow book with ID: ${bookId}`);
 
-        // Inside Borrow Handle
         setBooks(prevBooks =>
             prevBooks.map(book => {
                 if (book.id === bookId && book.availableCopies > 0) {
@@ -41,33 +35,8 @@ function BorrowReturnManagement() {
         );
     };
 
-    // Return Button
-    const handleReturn = (bookID) => {
-
-        // Inside Return Handle
-        setBooks(prevBooks =>
-            prevBooks.map(book => {
-                if (book.id === bookID) {
-                    if (book.availableCopies < book.totalCopies) {
-                        const updatedCopies = book.availableCopies + 1;
-                        return {
-                            ...book,
-                            availableCopies: updatedCopies,
-                            status: 'Available'
-                        };
-                    } else {
-                        alert(`All copies of "${book.title}" are already returned.`);
-                    }
-                }
-                return book;
-            })
-        );
-    };
-
-    // Disable Borrow Button
     const isBorrowDisabled = (availableCopies) => availableCopies === 0;
 
-    // Status Badge Color
     const getStatusClassName = (status) => {
         return status === 'Available' ? 'status-available' : 'status-borrowed';
     };
@@ -99,7 +68,6 @@ function BorrowReturnManagement() {
                         <th>Total Copies</th>
                         <th>Available Copies</th>
                         <th>Status</th>
-                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -116,23 +84,13 @@ function BorrowReturnManagement() {
                                     </span>
                             </td>
                             <td>
-                                <div className="button-group">
-                                    <button
-                                        className="borrow-button"
-                                        onClick={() => handleBorrow(book.id)}
-                                        disabled={isBorrowDisabled(book.availableCopies)}
-                                    >
-                                        Borrow
-                                    </button>
-
-                                    <button
-                                        className="return-button"
-                                        onClick={() => handleReturn(book.id)}
-                                        disabled={book.availableCopies === book.totalCopies}
-                                    >
-                                        Return
-                                    </button>
-                                </div>
+                                <button
+                                    className="borrow-button"
+                                    onClick={() => handleBorrow(book.id)}
+                                    disabled={isBorrowDisabled(book.availableCopies)}
+                                >
+                                    Borrow
+                                </button>
                             </td>
                         </tr>
                     ))}
