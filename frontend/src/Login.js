@@ -1,8 +1,18 @@
 // This is our new Login Page component
 import React, { useState } from 'react';
 import './Login.css'; // We'll add styles here
+import Lottie  from "lottie-react";
+import bookAnimation from "./Bookslib.json"
+import {useNavigate} from "react-router-dom";
 
 function Login() {
+    //Functions for the button
+    const navigate = useNavigate();
+
+    const handleLogin = () => {
+        navigate("/Dashboard");
+    }
+
     // These "state" variables store what the user types
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -20,7 +30,7 @@ function Login() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ username: username, password: password }),
+                body: JSON.stringify({username: username, password: password}),
             });
 
             // 2. Get the JSON response from Spring Boot
@@ -36,40 +46,52 @@ function Login() {
     };
 
     // 4. This is the JSX (HTML) that gets rendered
+    // 4. This is the JSX (HTML) that gets rendered
     return (
-        <div className="right-panel">
-            <div className="form-container">
-                <h2 className="login-title">Librarian Login (React)</h2>
-                <form onSubmit={handleSubmit}>
-                    <label className="form-label" htmlFor="username">Username</label>
-                    <div className="input-container">
-                        <input
-                            type="text"
-                            id="username"
-                            className="form-input"
-                            placeholder="Enter Username"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                        />
-                    </div>
+        <div className="login-container">
+            <div className="left-panel">
+                <Lottie animationData={bookAnimation} loop={true}
+                height={200}
+                        width={10}
+                />
 
-                    <label className="form-label" htmlFor="password">Password</label>
-                    <div className="input-container">
-                        <input
-                            type="password"
-                            id="password"
-                            className="form-input"
-                            placeholder="Enter Password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                    </div>
+            </div>
 
-                    <button type="submit" className="login-button">Login</button>
+            <div className="right-panel">
+                <div className="form-container">
+                    <h2 className="login-title">Librarian Login</h2>
+                    <form onSubmit={handleSubmit}>
+                        <label className="form-label" htmlFor="username">Username</label>
+                        <div className="input-container">
+                            <input
+                                type="text"
+                                id="username"
+                                className="form-input"
+                                placeholder="Enter Username"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                            />
+                        </div>
 
-                    {/* This will show "Login Successful!" or "Invalid username..." */}
-                    {message && <p className="server-message">{message}</p>}
-                </form>
+                        <label className="form-label" htmlFor="password">Password</label>
+                        <div className="input-container">
+                            <input
+                                type="password"
+                                id="password"
+                                className="form-input"
+                                placeholder="Enter Password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </div>
+
+                        <button type="submit" className="login-button" onClick={handleLogin}>Login</button>
+
+                        {/* This will show "Login Successful!" or "Invalid username..." */}
+                        {message && <p className="server-message">{message}</p>}
+                    </form>
+                </div>
+
             </div>
         </div>
     );
