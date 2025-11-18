@@ -1,148 +1,154 @@
-import React, { useState, useEffect } from 'react';
-import './Modify_members.css'; // Importing the corresponding CSS file
+import React, { useState } from "react";
+import "./Modify_member.css";
 
+// Member Details
 function ModifyMember() {
-    // State to hold form data (simulating initial data loaded for editing)
-    const [formData, setFormData] = useState({
-        memberId: '',
-        fullName: '',
-        emailAddress: '',
-        phoneNumber: '',
-        membershipType: 'Standard',
-        membershipDuration: '',
+    const [memberDetails, setMemberDetails] = useState({
+        memberId: "",
+        fullName: "",
+        emailAddress: "",
+        phoneNumber: "",
+        membershipType: "",
+        membershipDuration: "",
     });
 
-    // Simulate fetching existing member data on load
-    useEffect(() => {
-        const existingMemberData = {
-            memberId: 'L001',
-            fullName: 'Alice Smith',
-            emailAddress: 'alice.smith@example.com',
-            phoneNumber: '123-456-7890',
-            membershipType: 'Premium',
-            membershipDuration: 12,
-        };
-        setFormData(existingMemberData);
-    }, []);
+    const [errors, setErrors] = useState({});
+    const [message, setMessage] = useState("");
 
-    // Handler for updating state when any input changes
+    // Handle Input Changes
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
+        setMemberDetails({
+            ...memberDetails,
+            [name]: value,
+        });
     };
 
-    // Handler for the "Save Changes" action
-    const handleSaveChanges = (e) => {
+    // Validation
+    const validate = () => {
+        let newErrors = {};
+        if (!memberDetails.memberId.trim()) newErrors.memberId = "Member ID required";
+        if (!memberDetails.fullName.trim()) newErrors.fullName = "Full name required";
+        if (!memberDetails.emailAddress.includes("@")) newErrors.emailAddress = "Invalid email";
+        if (memberDetails.phoneNumber.length < 10)
+            newErrors.phoneNumber = "Phone number must be at least 10 digits";
+        if (!memberDetails.membershipType) newErrors.membershipType = "Select membership type";
+        if (!memberDetails.membershipDuration) newErrors.membershipDuration = "Enter duration";
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+    // Handle Save
+    const handleSave = (e) => {
         e.preventDefault();
-        console.log('Saving changes:', formData);
-        alert('Changes saved successfully! Data sent to API (simulated).');
-        // In a real app: axios.put('/api/members/' + formData.memberId, formData);
+        if (!validate()) return;
+
+        setMessage("Member details saved successfully!");
+        console.log("Saved member details:", memberDetails);
     };
 
-    // Handler for the "Cancel" action
+    // Handle Cancel/Reset
     const handleCancel = () => {
-        console.log('Operation cancelled.');
-        alert('Modification cancelled.');
+        setMemberDetails({
+            memberId: "",
+            fullName: "",
+            emailAddress: "",
+            phoneNumber: "",
+            membershipType: "",
+            membershipDuration: "",
+        });
+        setErrors({});
+        setMessage("");
     };
 
     return (
-        <div className="modify-member-page">
+        <div className="modify-member-container">
             <div className="modify-member-card">
-                <div className="modify-member-header">
-                    <h2>Modify Member Details</h2>
-                    <p>Update the information for an existing library member</p>
-                </div>
+                <h2>Modify Member Details</h2>
+                <p>Update the information for an existing library member</p>
 
-                <form onSubmit={handleSaveChanges} className="modify-member-form">
+                {message && <div className="form-message">{message}</div>}
 
-                    {/* Member ID (Read-Only) */}
+                <form onSubmit={handleSave}>
                     <div className="form-group">
-                        <label htmlFor="memberId">Member ID</label>
-                        <div className="input-with-icon">
-                            <input
-                                type="text"
-                                id="memberId"
-                                name="memberId"
-                                value={formData.memberId}
-                                onChange={handleChange}
-                                readOnly
-                                className="read-only-input"
-                            />
-                            <span className="input-suffix">#</span>
-                        </div>
-                    </div>
-
-                    {/* Full Name */}
-                    <div className="form-group">
-                        <label htmlFor="fullName">Full Name</label>
+                        <label>Member ID</label>
                         <input
                             type="text"
-                            id="fullName"
-                            name="fullName"
-                            value={formData.fullName}
+                            name="memberId"
+                            value={memberDetails.memberId}
                             onChange={handleChange}
                         />
+                        {errors.memberId && <span className="error">{errors.memberId}</span>}
                     </div>
 
-                    {/* Email Address */}
                     <div className="form-group">
-                        <label htmlFor="emailAddress">Email Address</label>
+                        <label>Full Name</label>
+                        <input
+                            type="text"
+                            name="fullName"
+                            value={memberDetails.fullName}
+                            onChange={handleChange}
+                        />
+                        {errors.fullName && <span className="error">{errors.fullName}</span>}
+                    </div>
+
+                    <div className="form-group">
+                        <label>Email Address</label>
                         <input
                             type="email"
-                            id="emailAddress"
                             name="emailAddress"
-                            value={formData.emailAddress}
+                            value={memberDetails.emailAddress}
                             onChange={handleChange}
                         />
+                        {errors.emailAddress && <span className="error">{errors.emailAddress}</span>}
                     </div>
 
-                    {/* Phone Number */}
                     <div className="form-group">
-                        <label htmlFor="phoneNumber">Phone Number</label>
+                        <label>Phone Number</label>
                         <input
                             type="tel"
-                            id="phoneNumber"
                             name="phoneNumber"
-                            value={formData.phoneNumber}
+                            value={memberDetails.phoneNumber}
                             onChange={handleChange}
                         />
+                        {errors.phoneNumber && <span className="error">{errors.phoneNumber}</span>}
                     </div>
 
-                    {/* Membership Type (Dropdown) */}
                     <div className="form-group">
-                        <label htmlFor="membershipType">Membership Type</label>
+                        <label>Membership Type</label>
                         <select
-                            id="membershipType"
                             name="membershipType"
-                            value={formData.membershipType}
+                            value={memberDetails.membershipType}
                             onChange={handleChange}
                         >
-                            <option value="Standard">Standard</option>
-                            <option value="Premium">Premium</option>
-                            <option value="Student">Student</option>
+                            <option value="" disabled hidden>Select type</option>
+                            <option value="standard">Standard</option>
+                            <option value="premium">Premium</option>
+                            <option value="student">Student</option>
                         </select>
+                        {errors.membershipType && <span className="error">{errors.membershipType}</span>}
                     </div>
 
-                    {/* Membership Duration (Number Input) */}
                     <div className="form-group">
-                        <label htmlFor="membershipDuration">Membership duration (Months)</label>
+                        <label>Membership Duration (Months)</label>
                         <input
                             type="number"
-                            id="membershipDuration"
                             name="membershipDuration"
-                            value={formData.membershipDuration}
+                            value={memberDetails.membershipDuration}
                             onChange={handleChange}
                             min="1"
                         />
+                        {errors.membershipDuration && (
+                            <span className="error">{errors.membershipDuration}</span>
+                        )}
                     </div>
 
-                    {/* Action Buttons */}
                     <div className="form-actions">
                         <button type="submit" className="save-button">Save Changes</button>
-                        <button type="button" className="cancel-button" onClick={handleCancel}>Cancel</button>
+                        <button type="button" className="cancel-button" onClick={handleCancel}>
+                            Cancel
+                        </button>
                     </div>
                 </form>
             </div>
