@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { FaPencilAlt, FaTrashAlt, FaSearch } from 'react-icons/fa';
-import './Add_book.css'; // Importing the CSS file
+import './Add_book.css';
 
-// Mock Data: In a real application, this would be fetched from your Spring Boot API.
+// Temporary Data
 const initialBooks = [
     { id: 101, title: 'Matilda', author: 'Roald Dahl', quantity: 3, status: 'Available' },
     { id: 102, title: 'Coraline', author: 'Neil Gaiman', quantity: 5, status: 'Borrowed' },
@@ -10,36 +10,37 @@ const initialBooks = [
     { id: 104, title: 'Holes', author: 'Louis Sachar', quantity: 4, status: 'Available' },
 ];
 
-function BookListDashboard() { // Renamed the function to be descriptive
+function BookListDashboard() {
     const [books, setBooks] = useState(initialBooks);
     const [searchTerm, setSearchTerm] = useState('');
 
-    // 1. Search Logic: Filters the books based on title or author match
+    // Search Logic
     const filteredBooks = books.filter(book =>
         book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         book.author.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    // 2. Action Handlers (Placeholders)
+    // Add Book Button (Placeholder)
     const handleAddBook = () => {
         console.log('Opening Add Book Modal/Form...');
         alert('Placeholder: Opens a form to add a new book.');
     };
 
+    // Edit Book (Placeholder)
     const handleEdit = (id) => {
         console.log(`Editing book with ID: ${id}`);
         alert(`Placeholder: Editing book with ID: ${id}`);
     };
 
+    // Delete Book
     const handleDelete = (id) => {
         if (window.confirm(`Are you sure you want to delete book ID ${id}?`)) {
-            // Client-side delete for demo, replace with API call in production
             setBooks(books.filter(book => book.id !== id));
             console.log(`Book ID ${id} deleted.`);
         }
     };
 
-    // 3. Status Badge Helper for dynamic styling
+    // Status Badge
     const getStatusClassName = (status) => {
         return status === 'Available' ? 'status-available' : 'status-borrowed';
     };
@@ -55,7 +56,6 @@ function BookListDashboard() { // Renamed the function to be descriptive
                     + Add Book
                 </button>
 
-                {/* Search Input Area */}
                 <div className="search-container">
                     <FaSearch className="search-icon" />
                     <input
@@ -68,7 +68,6 @@ function BookListDashboard() { // Renamed the function to be descriptive
                 </div>
             </div>
 
-            {/* Books Table */}
             <div className="book-table-container">
                 <table>
                     <thead>
@@ -82,7 +81,6 @@ function BookListDashboard() { // Renamed the function to be descriptive
                     </tr>
                     </thead>
                     <tbody>
-                    {/* Render rows based on filteredBooks array */}
                     {filteredBooks.map((book) => (
                         <tr key={book.id}>
                             <td>{book.id}</td>
