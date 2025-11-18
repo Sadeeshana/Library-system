@@ -1,0 +1,110 @@
+.modify-member-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    min-height: 100vh;
+}
+
+.modify-member-card {
+    background-color: #ffffff;
+    padding: 12px;
+    border-radius: 10px;
+    width: 500px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+}
+
+.modify-member-card h2 {
+    margin-bottom: 12px;
+    color: #333333;
+    font-size: 24px;
+    text-align: center;
+}
+
+.modify-member-card p {
+    margin-bottom: 30px;
+    font-size: 12px;
+    color: #888888;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555555;
+    font-size: 13px;
+}
+
+.form-group input,
+.form-group select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 12px;
+    color: #555555;
+}
+
+.error {
+    color: red;
+    font-size: 10px;
+    margin-top: 3px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 40px;
+}
+
+.save-button {
+    background-color: #72a9d8;
+    color: #0a2d4d;
+    border: none;
+    padding: 11px 30px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.save-button:hover{
+    background-color: #a7d9ff;
+}
+
+.cancel-button {
+    background-color: #888888;
+    color: #0a2d4d;
+    border: none;
+    padding: 11px 60px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.cancel-button:hover {
+    background-color: #aaaaaa;
+}
+
+.save-button, .cancel-button {
+    transition: background-color 0.3s ease;
+}
+
+.form-message {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    font-size: 14px;
+}
