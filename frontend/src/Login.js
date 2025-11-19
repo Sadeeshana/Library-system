@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import './Login.css'; // We'll add styles here
 import Lottie  from "lottie-react";
 import bookAnimation from "./Bookslib.json"
+import Librarian from "./Librarian.json"
 import {Link, useNavigate} from "react-router-dom";
 
 function Login() {
@@ -59,15 +60,15 @@ function Login() {
     // 4. This is the JSX (HTML) that gets rendered
     return (
         <div className="login-container">
-            <div className="left-panel">
-                <Lottie animationData={bookAnimation} loop={true}
-                height={200}
-                        width={10}
+            <div className="right-panel">
+                <Lottie animationData={Librarian} loop={true}
+                height={100}
+                        width={5}
                 />
 
             </div>
 
-            <div className="right-panel">
+            <div className="left-panel">
                 <div className="form-container">
                     <h2 className="login-title">Librarian Login</h2>
                     <form onSubmit={handleSubmit}>
