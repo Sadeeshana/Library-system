@@ -5,6 +5,7 @@ import Book from './Book.json';
 import borrow from './borrow.json';
 import reports from './Report.json';
 import Member from './Member.json';
+import logout from './logout.json';
 import Lottie from "lottie-react";
 
 //Start main sidebar
@@ -54,7 +55,7 @@ function Sidebar(){
             <div className="nav-footer">
                 <li className="nav-item">
                     <a href="">
-                        <Lottie animationData={DashIcon} className="nav-icon"/>
+                        <Lottie animationData={logout} className="nav-icon"/>
                         Logout</a>
                 </li>
             </div>
