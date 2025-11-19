@@ -1,0 +1,92 @@
+package com.example.Library.system;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Column;
+import jakarta.persistence.Table;
+import java.time.LocalDate;
+
+
+@Entity
+@Table(name = "Employee")
+
+public class Employee {
+    @Id
+    @Column(name = "EMP_ID")
+    private int empId;
+
+    @Column(name = "Name")
+    private String name;
+
+    @Column(name = "Address")
+    private String address;
+
+    @Column(name = "Role")
+    private String role;
+
+    @Column(name = "Phone_Number")
+    private int phoneNumber;
+
+    @Column(name = "Birthday")
+    private LocalDate birthday;
+
+    @Column(name = "Username")
+    private String username;
+
+    @Column(name = "Password")
+    private String password;
+
+    //Getters and setters
+    public int getEmpId() {
+        return empId;
+    }
+    public String getName() {
+        return name;
+    }
+    public String getAddress() {
+        return address;
+    }
+    public String getRole() {
+        return role;
+    }
+    public int getPhoneNumber() {
+        return phoneNumber;
+    }
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+    public String getUsername() {
+        return username;
+    }
+    public String getPassword() {
+        return password;
+    }
+
+    public void setEmpId(int empId) {
+        this.empId = empId;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setAddress(String address) {
+        this.address = address;
+    }
+    public void setRole(String role) {
+        this.role = role;
+    }
+    public void setPhoneNumber(int phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
+
+}

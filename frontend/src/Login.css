@@ -36,8 +36,9 @@
 
 .login-title {
     font-size: 2rem;
+    color: white;
     font-weight: bold;
-    color: #333;
+
     margin-bottom: 30px;
 }
 
@@ -45,13 +46,14 @@
     display: block;
     font-size: 1rem;
     font-weight: bold;
-    color: #555;
+    color: white;
     margin-bottom: 8px;
 }
 
 .input-container {
     position: relative;
     margin-bottom: 20px;
+    color: white;
 }
 
 .form-input {
@@ -84,4 +86,37 @@
     margin-top: 15px;
     font-size: 0.9rem;
     color: red; /* Or green for success */
+}
+
+/*Forgot password*/
+.forgot-link{
+    color: white;
+    text-decoration: none;
+    font-size: 0.9rem;
+
+    align-self: flex-end;
+
+    margin-bottom: 25px;
+
+}
+
+.forgot-link:hover{
+    text-decoration: underline;
+}
+/*User registration*/
+.userre{
+    color: white;
+    text-decoration: none;
+    font-size: 0.9rem;
+
+    align-self: flex-end;
+
+    margin-left: 170px;
+    margin-bottom: 25px;
+
+
+}
+
+.userre:hover{
+    text-decoration: underline;
 }
