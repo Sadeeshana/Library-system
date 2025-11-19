@@ -6,7 +6,7 @@ import Dashboard from "./Dashboard";
 import {Routes, Route} from "react-router-dom";
 import './App.css';
 
-function Dashboardlayout() {
+function App() {
     return (
         <div className="app-container">
             {/* Sidebar on the left */}
@@ -14,9 +14,10 @@ function Dashboardlayout() {
 
             {/* Main content on the right */}
             <div className="main-content">
-                <Dashboard />
+                <BorrowReturnManagement />
             </div>
         </div>
+
     )
 }
 
