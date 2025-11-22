@@ -17,15 +17,30 @@ import {
 
 function Dashboard(){
 
+
+    //Backend part for count total books
     const [totalBooks, setTotalBooks] = useState(0);
 
     useEffect(() => {
-        // This calls your Spring Boot Backend
         fetch('http://localhost:8080/api/books/total')
             .then(response => response.json())
             .then(data => {
                 console.log("Data fetched:", data);
                 setTotalBooks(data); // Updates the variable
+            })
+            .catch(error => console.error("Error fetching data:", error));
+    }, []);
+
+    //Backend part for count total members
+    const [totalMembers, setTotalMembers] = useState(0);
+
+    useEffect(() => {
+        // This calls your Spring Boot Backend
+        fetch('http://localhost:8080/api/members/total')
+            .then(response => response.json())
+            .then(data => {
+                console.log("Data fetched:", data);
+                setTotalMembers(data); // Updates the variable
             })
             .catch(error => console.error("Error fetching data:", error));
     }, []);
@@ -61,7 +76,9 @@ function Dashboard(){
                         </div>
                         <div className="card-title">Total Members</div>
                     </div>
-                    <div className="card-value">200</div>
+                    <div className="card-value">
+                        <CountUp end={totalMembers} duration={3} />
+                    </div>
                 </div>
 
 
