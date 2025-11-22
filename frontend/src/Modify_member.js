@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './Modify_members.css'; // Importing the corresponding CSS file
+import './Modify_member.css'; // Importing the corresponding CSS file
 
 function ModifyMember() {
     // State to hold form data (simulating initial data loaded for editing)

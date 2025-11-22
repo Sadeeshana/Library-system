@@ -4,10 +4,12 @@ import Login from './Login';
 import './Login.css';
 import Sidebar from "./Sidebar";
 import Dashboard from "./Dashboard";
+import Report from "./Report";
 import {Routes,Route} from "react-router-dom";
+import ModifyMember from "./Modify_member";
 
 
-function Dashboardlayout() {
+function DashboardLayout({children}) {
     return (
         <div className="app-container">
             {/* 2. Add the Sidebar component here */}
@@ -15,7 +17,7 @@ function Dashboardlayout() {
 
             {/* 3. This will be our main content area */}
             <div className="main-content">
-                <Dashboard />
+                {children}
             </div>
         </div>
     )
@@ -23,6 +25,7 @@ function Dashboardlayout() {
 
 
         //Route
+
     function App() {
         return (
             // 3. DEFINE YOUR ROUTES
@@ -30,8 +33,27 @@ function Dashboardlayout() {
                 {/* URL "/" will show the Login Page */}
                 <Route path="/" element={<Login />} />
 
-                {/* URL "/dashboard" will show the Dashboard Page */}
-                <Route path="/dashboard" element={<Dashboardlayout />} />
+                <Route
+                    path="/dashboard"
+                    element={
+                        <DashboardLayout>
+                            <Dashboard />
+                        </DashboardLayout>
+                    }
+                />
+
+
+                <Route
+                    path="/Report"
+                    element={
+                        <DashboardLayout>
+                            <Report />
+                        </DashboardLayout>
+                    }
+                />
+
+
+
             </Routes>
         );
     }
