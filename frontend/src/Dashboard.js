@@ -1,7 +1,8 @@
 
-import React from "react";
+import React,{useState , useEffect} from "react";
 import './Dashboard.css'
 import App from "./App";
+import CountUp from 'react-countup';
 
 //Add all icons
 import {
@@ -15,6 +16,20 @@ import {
 }from 'react-icons/bs';
 
 function Dashboard(){
+
+    const [totalBooks, setTotalBooks] = useState(0);
+
+    useEffect(() => {
+        // This calls your Spring Boot Backend
+        fetch('http://localhost:8080/api/books/total')
+            .then(response => response.json())
+            .then(data => {
+                console.log("Data fetched:", data);
+                setTotalBooks(data); // Updates the variable
+            })
+            .catch(error => console.error("Error fetching data:", error));
+    }, []);
+
     return (
         <div className="Dashboard-container">
             <div className="dashboard-header">
@@ -33,7 +48,9 @@ function Dashboard(){
                         </div>
                         <div className="card-title">Total books</div>
                     </div>
-                    <div className="card-value">500</div>
+                    <div className="card-value">
+                        <CountUp end={totalBooks} duration={3} />
+                    </div>
                 </div>
 
 
