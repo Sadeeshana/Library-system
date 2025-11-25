@@ -1,0 +1,115 @@
+.reports-container {
+    padding: 40px;
+}
+
+
+.search-bar-container {
+    margin-bottom: 30px;
+}
+
+.search-bar {
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #dfe4ea;
+    box-sizing: border-box;
+}
+
+.reports-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+
+.filter-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.filter-card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+
+.form-row {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 25px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.form-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 8px;
+
+}
+
+.date-picker,
+.form-select,
+.form-input {
+    width: 100%;
+    padding: 12px;
+    font-size: 0.95rem;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+.react-datepicker-wrapper {
+    width: 100%;
+}
+
+.button-container {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+
+.pdf-button,
+.clear-button {
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+
+.pdf-button {
+    background-color: #2196F3;
+    color: white;
+}
+
+
+.pdf-button:hover {
+    background-color: #1a78c2;
+}
+
+
+.clear-button {
+    background-color: #e0e0e0; /* Grey color */
+    color: #333;
+}
+
+
+.clear-button:hover {
+    background-color: #c7c7c7;
+}
