@@ -4,6 +4,7 @@ import BorrowReturnManagement from "./Borrow_return_management";
 import Modify_member from "./Modify_member";
 import Sidebar from "./Sidebar";
 import Add_book from "./Add_book";
+import Librarian_register from "./librarian_register";
 
 
 function App() {
@@ -14,7 +15,7 @@ function App() {
 
             {/* 3. This will be our main content area*/}
             <div className="main-content">
-                <BorrowReturnManagement />
+                <Librarian_register />
             </div>
         </div>
 
