@@ -16,7 +16,7 @@ body {
     padding: 20px 40px 30px; /* Added top padding for spacing */
 }
 
-/* --- HEADER SECTION (UPDATED) --- */
+/* ---- HEADER SECTION (UPDATED) --- */
 .page-header {
     background-color: transparent; /* Removes the blue background */
     padding: 0;                    /* Removes internal padding */

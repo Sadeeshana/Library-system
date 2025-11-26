@@ -6,7 +6,7 @@ const MemberDetails = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // In a real app, fetch from: http://localhost:8080/api/members/54854
+        // In a real app, fetch from:: http://localhost:8080/api/members/54854
         // For this demo, we will simulate the fetch so you can see the UI immediately.
         const fetchData = async () => {
             try {
