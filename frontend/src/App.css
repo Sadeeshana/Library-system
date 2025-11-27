@@ -1,21 +1,15 @@
-/* This creates the main 2-column layout
-  (Sidebar on left, main content on right)
-*/
+
 .app-container {
     display: flex;
+    height: 100vh;
+    overflow: hidden;
 }
 
-/* This is the main content area to the right
-  of the sidebar.
-*/
-.main-content {
-    /* 'flex: 1' tells it to take up
-       all remaining space */
-    flex: 1;
 
+.main-content {
+    flex: 1;
     height: 100vh;
-    /* Add a light background color */
     background-color: #f4f7fa;
     box-sizing: border-box;
-    overflow-y: auto; /* Add scroll if content is long */
+    overflow-y: auto;
 }

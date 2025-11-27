@@ -1,24 +1,61 @@
 import React from "react";
 import './App.css';
-import BorrowReturnManagement from "./Borrow_return_management";
-import Modify_member from "./Modify_member";
+import Login from './Login';
+import './Login.css';
 import Sidebar from "./Sidebar";
-import Add_book from "./Add_book";
+import Dashboard from "./Dashboard";
+import Report from "./Report";
+import {Routes,Route} from "react-router-dom";
+import ModifyMember from "./Modify_member";
 
 
-function App() {
+function DashboardLayout({children}) {
     return (
         <div className="app-container">
             {/* 2. Add the Sidebar component here */}
             <Sidebar />
 
-            {/* 3. This will be our main content area*/}
+            {/* 3. This will be our main content area */}
             <div className="main-content">
-                <BorrowReturnManagement />
+                {children}
             </div>
         </div>
-
     )
 }
+
+
+        //Route
+
+    function App() {
+        return (
+            // 3. DEFINE YOUR ROUTES
+            <Routes>
+                {/* URL "/" will show the Login Page */}
+                <Route path="/" element={<Login />} />
+
+                <Route
+                    path="/dashboard"
+                    element={
+                        <DashboardLayout>
+                            <Dashboard />
+                        </DashboardLayout>
+                    }
+                />
+
+
+                <Route
+                    path="/Report"
+                    element={
+                        <DashboardLayout>
+                            <Report />
+                        </DashboardLayout>
+                    }
+                />
+
+
+
+            </Routes>
+        );
+    }
 
 export default App;

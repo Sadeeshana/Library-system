@@ -1,0 +1,201 @@
+/* Global Reset & Font */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 0;
+}
+
+.page-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px 40px 30px; /* Added top padding for spacing */
+}
+
+/* ---- HEADER SECTION (UPDATED) --- */
+.page-header {
+    background-color: transparent; /* Removes the blue background */
+    padding: 0;                    /* Removes internal padding */
+    margin-bottom: 20px;
+    border-radius: 0;              /* Removes rounded corners */
+    color: #333;                   /* Ensures text is dark */
+
+    /* Stack title and subtitle vertically */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.page-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 5px;
+    color: #111; /* Dark Title */
+}
+
+.page-header p {
+    color: #666; /* Grey Subtitle */
+    margin: 0;
+    font-size: 16px;
+}
+/* -------------------------------- */
+
+/* Profile Card */
+.profile-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+
+.profile-info {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.avatar-circle {
+    width: 80px;
+    height: 80px;
+    background-color: #81d4fa;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar-circle img {
+    width: 100%;
+    height: auto;
+}
+
+.profile-text h2 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.member-id {
+    color: #555;
+    margin: 5px 0;
+}
+
+.status-text {
+    color: #666;
+    margin: 0;
+}
+
+.edit-btn {
+    background-color: #f0f0f0;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.edit-btn:hover {
+    background-color: #e0e0e0;
+}
+
+/* Content Layout Grid */
+.content-grid {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.left-column {
+    flex: 1;
+    min-width: 300px;
+}
+
+.right-column {
+    flex: 1.5;
+    min-width: 400px;
+    flex-shrink: 0;
+}
+
+/* Details Section Styling */
+.details-section h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #111;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 30px;
+    row-gap: 25px;
+}
+
+.detail-item {
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 10px;
+}
+
+.detail-item label {
+    display: block;
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 5px;
+}
+
+.detail-item .value {
+    font-size: 16px;
+    font-weight: 500;
+    color: #000;
+}
+
+.mt-large {
+    margin-top: 40px;
+}
+
+/* Table Styling */
+.table-container {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 12px;
+}
+
+th {
+    text-align: left;
+    font-weight: 700;
+    padding: 12px 8px;
+    color: #000;
+}
+
+td {
+    padding: 15px 8px;
+    color: #555;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+.status-badge {
+    background-color: #f0f0f0;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 11px;
+    color: #333;
+}
