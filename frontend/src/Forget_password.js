@@ -1,10 +1,25 @@
 import React, { useState } from 'react';
 import './Forget_password.css';
-import { useNavigate } from 'react-router-dom';
+import { Link , useNavigate } from 'react-router-dom';
+
+
+
+
 
 // Renamed the function from 'frogetPassword' to 'ForgotPassword'
 function ForgotPassword() {
+
+
+    //Navigation parts
     const navigate = useNavigate();
+
+    const handleReset =(e) => {
+        e.preventDefault();
+        navigate("/verify-password");
+    }
+
+
+
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -34,6 +49,11 @@ function ForgotPassword() {
                 setLoading(false);
                 // Standard security practice: Don't confirm if an email exists
                 setMessage({ type: 'success', text: `If an account exists for ${email}, a verification code has been sent.` });
+
+                setTimeout(() => {
+                    navigate("/verify-password");
+                }, 1500);
+
             }, 700);
         } catch (err) {
             setLoading(false);

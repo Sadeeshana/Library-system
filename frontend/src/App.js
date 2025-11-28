@@ -7,7 +7,10 @@ import Dashboard from "./Dashboard";
 import Report from "./Report";
 import {Routes,Route} from "react-router-dom";
 import ModifyMember from "./Modify_member";
-
+import ForgetPassword from "./Forget_password";
+import VerifyPassword from "./verify_password";
+import Members from "./Members_page";
+import BorrowReturn from "./Borrow_return_management";
 
 function DashboardLayout({children}) {
     return (
@@ -42,6 +45,25 @@ function DashboardLayout({children}) {
                     }
                 />
 
+                <Route
+                    path="/members"
+                    element={
+                        <DashboardLayout>
+                            <Members />
+                        </DashboardLayout>
+                    }
+
+                />
+
+                <Route
+                    path="/borrow"
+                    element={
+                    <DashboardLayout>
+                        <BorrowReturn />
+                    </DashboardLayout>
+                    }
+                />
+
 
                 <Route
                     path="/Report"
@@ -50,6 +72,15 @@ function DashboardLayout({children}) {
                             <Report />
                         </DashboardLayout>
                     }
+                />
+
+                <Route
+                    path="/forgot-password"
+                    element={<ForgetPassword />} />
+
+                <Route
+                    path="/verify-password"
+                    element={<VerifyPassword/>}
                 />
 
 

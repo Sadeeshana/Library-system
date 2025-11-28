@@ -36,6 +36,9 @@ public class Employee {
     @Column(name = "Password")
     private String password;
 
+    @Column(name = "Email")
+    private String email;
+
     //Getters and setters
     public int getEmpId() {
         return empId;
@@ -61,6 +64,9 @@ public class Employee {
     public String getPassword() {
         return password;
     }
+    public String getEmail() {
+        return email;
+    }
 
     public void setEmpId(int empId) {
         this.empId = empId;
@@ -85,6 +91,9 @@ public class Employee {
     }
     public void setPassword(String password) {
         this.password = password;
+    }
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 

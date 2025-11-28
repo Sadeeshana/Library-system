@@ -45,6 +45,22 @@ function Dashboard(){
             .catch(error => console.error("Error fetching data:", error));
     }, []);
 
+
+    //Backend part for count active members
+    const [totalactive, setTotalActive] = useState(0);
+
+    useEffect(() => {
+        // This calls your Spring Boot Backend
+        fetch('http://localhost:8080/api/active-members/count')
+            .then(response => response.json())
+            .then(data => {
+                console.log("Data fetched:", data);
+                setTotalActive(data); // Updates the variable
+            })
+            .catch(error => console.error("Error fetching data:", error));
+    }, []);
+
+
     return (
         <div className="Dashboard-container">
             <div className="dashboard-header">
@@ -111,7 +127,9 @@ function Dashboard(){
                         </div>
                         <div className="card-title">Active Members</div>
                     </div>
-                    <div className="card-value">150</div>
+                    <div className="card-value">
+                        <CountUp end={totalactive} duration={3} />
+                    </div>
                 </div>
 
 
