@@ -2,23 +2,10 @@ import React, { useState } from 'react';
 import './Forget_password.css';
 import { Link , useNavigate } from 'react-router-dom';
 
-
-
-
-
-// Renamed the function from 'frogetPassword' to 'ForgotPassword'
 function ForgotPassword() {
 
 
-    //Navigation parts
     const navigate = useNavigate();
-
-    const handleReset =(e) => {
-        e.preventDefault();
-        navigate("/verify-password");
-    }
-
-
 
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState(null);
@@ -29,38 +16,50 @@ function ForgotPassword() {
     }
 
     const handleBack = () => {
-        // Navigates back if history exists, otherwise goes to the home page ('/')
         navigate(-1);
     };
 
     const handleSend = async (e) => {
-        e && e.preventDefault && e.preventDefault();
+        e.preventDefault();
         setMessage(null);
+
+        // 1. Validate Email
         if (!isValidEmail(email.trim())) {
             setMessage({ type: 'error', text: 'Please enter a valid email address.' });
             return;
         }
 
         setLoading(true);
+
         try {
-            // Replace with real API call if available
-            // Simulating API delay with setTimeout
-            setTimeout(() => {
-                setLoading(false);
-                // Standard security practice: Don't confirm if an email exists
-                setMessage({ type: 'success', text: `If an account exists for ${email}, a verification code has been sent.` });
+            // call the backend
+            const response = await fetch('http://localhost:8080/api/auth/send-code', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email }),
+            });
 
+            const data = await response.json();
+            setLoading(false);
+
+            //Handle Backend Response
+            if (data.status === 'success') {
+                setMessage({ type: 'success', text: data.message });
+
+                // 4. Navigate AND send the email to the next page
                 setTimeout(() => {
-                    navigate("/verify-password");
+                    navigate("/verify-password", { state: { email: email } });
                 }, 1500);
+            } else {
+                setMessage({ type: 'error', text: data.message });
+            }
 
-            }, 700);
         } catch (err) {
             setLoading(false);
-            setMessage({ type: 'error', text: 'Could not send verification code. Try again later.' });
+            console.error("Fetch error:", err);
+            setMessage({ type: 'error', text: 'Server not responding. Is Spring Boot running?' });
         }
     };
-
     return (
         <div className="fp-container">
             <aside className="fp-left">

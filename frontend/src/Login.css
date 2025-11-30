@@ -1,36 +1,36 @@
-/* This is the main container you just added in Login.js */
+
 .login-container {
     display: flex;
-    min-height: 100vh; /* Make the container fill the full screen height */
+    min-height: 100vh;
     font-family: Arial, sans-serif;
 }
 
-/* --- LEFT (Blue) Panel --- */
+/* LEFT (Blue) Panel */
 .left-panel {
-    flex: 1; /* Takes up 50% of the width */
+    flex: 1;
     background-color: #0a2d4d; /* Dark blue color */
 
-    /* Center the book image (when you add it) */
+
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-/* --- RIGHT (White) Panel --- */
+/*RIGHT (White) Panel */
 .right-panel {
-    flex: 1; /* Takes up the other 50% */
-    background-color: #ffffff; /* White */
+    flex: 1;
+    background-color: #ffffff;
 
-    /* Center the login form */
+
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-/* --- Form Styles (from your image) --- */
+
 .form-container {
     width: 100%;
-    max-width: 400px; /* Set a max width for the form */
+    max-width: 400px;
     padding: 20px;
 }
 
@@ -62,7 +62,7 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     font-size: 1rem;
-    box-sizing: border-box; /* Important for padding to work right */
+    box-sizing: border-box;
 }
 
 .login-button {
@@ -71,7 +71,7 @@
     border: none;
     border-radius: 8px;
     background-color: #a0c9e8; /* Light blue */
-    color: #0a2d4d; /* Dark blue text */
+    color: #0a2d4d;
     font-size: 1.1rem;
     font-weight: bold;
     cursor: pointer;

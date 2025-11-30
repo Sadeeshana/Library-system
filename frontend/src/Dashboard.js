@@ -4,6 +4,7 @@ import './Dashboard.css'
 import App from "./App";
 import CountUp from 'react-countup';
 
+
 //Add all icons
 import {
     BsBookFill,
@@ -47,7 +48,7 @@ function Dashboard(){
 
 
     //Backend part for count active members
-    const [totalactive, setTotalActive] = useState(0);
+    const [totalactive, setTotalActive] = useState(1);
 
     useEffect(() => {
         // This calls your Spring Boot Backend

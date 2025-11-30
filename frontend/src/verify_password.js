@@ -1,29 +1,69 @@
-import React, { useEffect } from "react";
+import React, { useState, useRef } from "react";
 import "./verify_password.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate,useLocation } from "react-router-dom";
 
 function Verify_password() {
 
+    const [otp, setOtp] = useState(['', '', '', '']);
+    const inputRefs = useRef([]);
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    // 2. Get the email from navigation
+    const email = location.state?.email || "";
+
+    const handleChange = (index, value) => {
+        if (isNaN(value)) return;
+        const newOtp = [...otp];
+        newOtp[index] = value;
+        setOtp(newOtp);
+        if (value !== '' && index < 3) {
+            inputRefs.current[index + 1].focus();
+        }
+    };
+
+    const handleKeyDown = (index, e) => {
+        if (e.key === "Backspace" && index > 0 && otp[index] === '') {
+            inputRefs.current[index - 1].focus();
+        }
+    };
 
 
-    // Auto move cursor between OTP boxes
-    useEffect(() => {
-        const inputs = document.querySelectorAll(".otp-input");
+    const handleVerify = async (e) => {
+        e.preventDefault();
 
-        inputs.forEach((input, index) => {
-            input.addEventListener("input", () => {
-                if (input.value.length === 1 && index < 3) {
-                    inputs[index + 1].focus();
-                }
+        const finalCode = otp.join(""); // Turn ['1','2','3','4'] into "1234"
+
+        if (finalCode.length !== 4) {
+            alert("Please enter a 4-digit code");
+            return;
+        }
+
+        try {
+
+            const response = await fetch('http://localhost:8080/api/auth/verify-otp', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: email, // We send the email we got from the previous page
+                    code: finalCode
+                }),
             });
 
-            input.addEventListener("keydown", (e) => {
-                if (e.key === "Backspace" && input.value === "" && index > 0) {
-                    inputs[index - 1].focus();
-                }
-            });
-        });
-    }, []);
+            const data = await response.json();
+
+            if (data.status === 'success') {
+                alert("Code Verified Successfully! (You can create a reset password page next)");
+                // navigate("/reset-password", { state: { email: email } });
+            } else {
+                alert("Error: " + data.message);
+            }
+
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Server connection failed.");
+        }
+    }
 
     return (
         <div className="verify-container">
@@ -34,7 +74,7 @@ function Verify_password() {
                     Please enter the 4-digit verification code sent to your email
                 </p>
 
-                <Link to="/login">
+                <Link to="/Login">
                     <button className="back-btn">Back to Login</button>
                 </Link>
             </div>

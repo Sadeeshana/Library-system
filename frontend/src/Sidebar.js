@@ -39,17 +39,17 @@ function Sidebar(){
                     </Link>
 
                 </li>
-                <li className="nav-item">
+                <li className={getNavItemClass('/Books')}>
                    <Link  to="/Books">
                         <Lottie animationData={Book} className="nav-icon"/>
                         Books</Link>
                 </li>
-                <li className="nav-item">
+                <li className={getNavItemClass('/Members')}>
                     <Link  to="/Members">
                         <Lottie animationData={Member} className="nav-icon"/>
                         Member</Link>
                 </li>
-                <li className="nav-item">
+                <li className={getNavItemClass('/borrow')}>
                     <Link  to="/borrow">
                         <Lottie animationData={borrow} className="nav-icon"/>
                         Borrow</Link>

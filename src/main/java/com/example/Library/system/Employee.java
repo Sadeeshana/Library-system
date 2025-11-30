@@ -39,6 +39,10 @@ public class Employee {
     @Column(name = "Email")
     private String email;
 
+    @Column(name = "otp_code")
+    private String otpCode;
+
+
     //Getters and setters
     public int getEmpId() {
         return empId;
@@ -67,6 +71,9 @@ public class Employee {
     public String getEmail() {
         return email;
     }
+    public String getOtpCode() {
+        return otpCode;
+    }
 
     public void setEmpId(int empId) {
         this.empId = empId;
@@ -94,6 +101,9 @@ public class Employee {
     }
     public void setEmail(String email) {
         this.email = email;
+    }
+    public void setOtpCode(String otpCode) {
+        this.otpCode = otpCode;
     }
 
 
