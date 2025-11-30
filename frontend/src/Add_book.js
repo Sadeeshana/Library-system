@@ -1,17 +1,12 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { FaPencilAlt, FaTrashAlt, FaSearch } from 'react-icons/fa';
-import './Add_book.css'; // Importing the CSS file
+import './Add_book.css';
+import {isRouteErrorResponse} from "react-router-dom"; // Importing the CSS file
+import { motion } from 'framer-motion';
 
-// Mock Data: In a real application, this would be fetched from your Spring Boot API.
-const initialBooks = [
-    { id: 101, title: 'Matilda', author: 'Roald Dahl', quantity: 3, status: 'Available' },
-    { id: 102, title: 'Coraline', author: 'Neil Gaiman', quantity: 5, status: 'Borrowed' },
-    { id: 103, title: 'Wonder', author: 'R.J. Palacio', quantity: 2, status: 'Available' },
-    { id: 104, title: 'Holes', author: 'Louis Sachar', quantity: 4, status: 'Available' },
-];
 
 function BookListDashboard() { // Renamed the function to be descriptive
-    const [books, setBooks] = useState(initialBooks);
+    const [books, setBooks] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
 
     // 1. Search Logic: Filters the books based on title or author match
@@ -44,6 +39,17 @@ function BookListDashboard() { // Renamed the function to be descriptive
         return status === 'Available' ? 'status-available' : 'status-borrowed';
     };
 
+    useEffect(() => {
+        //Fetch the list from new api
+        fetch('http://localhost:8080/api/books/all')
+        .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                setBooks(data);
+            })
+        .catch(error => console.error(error));
+    },[]);
+
     return (
         <div className="book-list-page">
             <div className="book-list-header">
@@ -73,21 +79,33 @@ function BookListDashboard() { // Renamed the function to be descriptive
                 <table>
                     <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Title</th>
+                        <th>Book ID</th>
+                        <th>Book Name</th>
+                        <th>ISBN</th>
                         <th>Author</th>
+                        <th>Book Price</th>
                         <th>Quantity</th>
                         <th>Status</th>
-                        <th>Actions</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
                     </tr>
                     </thead>
                     <tbody>
+
                     {/* Render rows based on filteredBooks array */}
-                    {filteredBooks.map((book) => (
-                        <tr key={book.id}>
-                            <td>{book.id}</td>
+                    {filteredBooks.map((book , index) => (
+                        //Waterfall effect
+                        <motion.tr key={book.bookId}
+                        initial={{opacity:0,y:0}}
+                                   animate={{opacity:1,y:0}}
+                              transition={{duration:0.3,delay:index *0.1}}
+
+                        >
+                            <td>{book.bookId}</td>
                             <td>{book.title}</td>
+                            <td>{book.isbn}</td>
                             <td>{book.author}</td>
+                            <td>{book.bookPrice}</td>
                             <td>{book.quantity}</td>
                             <td>
                   <span className={`book-status ${getStatusClassName(book.status)}`}>
@@ -100,13 +118,16 @@ function BookListDashboard() { // Renamed the function to be descriptive
                                     onClick={() => handleEdit(book.id)}
                                     title="Edit"
                                 />
+                            </td>
+                            <td className="actions-cell">
                                 <FaTrashAlt
                                     className="action-icon delete-icon"
                                     onClick={() => handleDelete(book.id)}
                                     title="Delete"
                                 />
                             </td>
-                        </tr>
+
+                        </motion.tr>
                     ))}
                     </tbody>
                 </table>
