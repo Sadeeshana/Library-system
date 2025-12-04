@@ -1,66 +1,112 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './Members_page.css';
+import {FaPencilAlt, FaTrashAlt} from "react-icons/fa";
+import { motion } from 'framer-motion';
 
 const MemberPage = () => {
     // Mock data matching the uploaded image, ensuring full names are included
-    const membersData = [
-        // Ensure data reflects the full, often repeating, names shown in the image
-        { id: 1, name: 'Sopia clak Fit clak', type: 'Premium', duration: '12 months', email: 'sopia12@gmail.com', status: 'Active' },
-        { id: 2, name: 'Shen Shan', type: 'Standard', duration: '11 months', email: 'shen13@gmail.com', status: 'Active' },
-        { id: 3, name: 'Soda clak', type: 'Premium', duration: '9 months', email: 'soda12@gmail.com', status: 'Active' },
-        { id: 4, name: 'Johon Shen', type: 'Premium', duration: '8 months', email: 'Johon12@gmail.com', status: 'Active' },
-        { id: 5, name: 'Sopia clak Fit clak', type: 'Premium', duration: '12 months', email: 'sopia12@gmail.com', status: 'Active' },
-        { id: 6, name: 'chinas clak China\'s clack', type: 'Premium', duration: '4 months', email: 'chinas12@gmail.com', status: 'Active' },
-        { id: 7, name: 'Sopia Andrew Agree Andrew', type: 'Premium', duration: '12 months', email: 'sopia12@gmail.com', status: 'Active' },
-        { id: 8, name: 'Seman clak', type: 'Standard', duration: '12 months', email: 'Seman12@gmail.com', status: 'Active' },
-    ];
 
-    return (
-        <div className="member-content">
+        const [members, setMembers] = useState([]);
 
-            {/* Title - Matches the "Member" text in the image */}
-            <h1 className="page-title-standalone">Member</h1>
 
-            {/* Large Search Bar Area */}
-            <div className="member-search-container">
-                {/* Re-using the existing 'large-search-bar' class, styled in CSS to match the image */}
-                <div className="large-search-bar">
-                    <span>🔍</span>
-                    <input type="text" placeholder="Search Members" />
+        const handleEdit = (id) => {
+            console.log(`Editing book with ID: ${id}`);
+            alert(`Placeholder: Editing book with ID: ${id}`);
+        };
+
+        const handleDelete = (id) => {
+            if (window.confirm(`Are you sure you want to delete book ID ${id}?`)) {
+                // Client-side delete for demo, replace with API call in production
+                setMembers(members.filter(member => member.id !== id));
+                console.log(`Book ID ${id} deleted.`);
+            }
+        };
+
+
+        useEffect(() => {
+            //Fetch the list from new api
+            fetch('http://localhost:8080/api/members/all')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    setMembers(data);
+                })
+                .catch(error => console.error(error));
+        }, []);
+
+
+        return (
+            <div className="member-content">
+
+                {/* Title - Matches the "Member" text in the image */}
+                <h1 className="page-title-standalone">Member</h1>
+
+                {/* Large Search Bar Area */}
+                <div className="member-search-container">
+                    {/* Re-using the existing 'large-search-bar' class, styled in CSS to match the image */}
+                    <div className="large-search-bar">
+                        <span>🔍</span>
+                        <input type="text" placeholder="Search Members"/>
+                    </div>
                 </div>
-            </div>
 
-            {/* Data Table */}
-            <div className="table-wrapper">
-                <table className="member-table">
-                    <thead>
-                    <tr>
-                        {/* Headers capitalized and ordered exactly as in the image */}
-                        <th>NAME</th>
-                        <th>MEMBERSHIP TYPE</th>
-                        <th>MEMBERSHIP DURATION</th>
-                        <th>CONTENT DETAILS</th>
-                        <th>MEMBERSHIP DETAILS</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {membersData.map((member, index) => (
-                        <tr key={index}>
-                            <td>{member.name}</td>
-                            <td>{member.type}</td>
-                            <td>{member.duration}</td>
-                            <td>{member.email}</td>
-                            <td>
-                                <button className="status-badge">{member.status}</button>
-                            </td>
+                {/* Data Table */}
+                <div className="table-wrapper">
+                    <table className="member-table">
+                        <thead>
+                        <tr>
+                            <th>Member ID</th>
+                            <th>Member Name</th>
+                            <th>Email</th>
+                            <th>Phone number</th>
+                            <th>Member Status</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
-                    ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        {members.map((member, index) => (
+
+                                <motion.tr key={member.memberId}
+                                           initial={{opacity:0,y:0}}
+                                           animate={{opacity:1,y:0}}
+                                           transition={{duration:0.3,delay:index *0.1}}
+
+                                >
+                                <td>{member.memberId}</td>
+                                <td>{member.memberName}</td>
+                                <td>{member.memberEmail}</td>
+                                <td>{member.memberPhoneNumber}</td>
+
+                                <td>
+                                    <button className="status-badge">{member.memberStatus}</button>
+                                </td>
+                                <td className="actions-cell">
+                                    <FaPencilAlt
+                                        className="action-icon edit-icon"
+                                        onClick={() => handleEdit(member.memberId)}
+                                        title="Edit"
+                                    />
+                                </td>
+
+                                <td className="actions-cell">
+                                    <FaTrashAlt
+                                        className="action-icon delete-icon"
+                                        onClick={() => handleDelete(member.memberId)}
+                                        title="Delete"
+                                    />
+                                </td>
+                                </motion.tr>
+
+
+
+                        ))}
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
+        );
 
-        </div>
-    );
 };
-
 export default MemberPage;

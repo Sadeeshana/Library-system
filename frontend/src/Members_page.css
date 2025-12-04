@@ -71,29 +71,30 @@
 }
 
 /* --- Table Styling --- */
-.table-wrapper {
-    border: 1px solid var(--border-color-light);
-    border-radius: 12px;
-    overflow: hidden;
-}
+
 
 .member-table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
+    white-space: nowrap;
 }
 
 .member-table thead {
     background-color: #fcfcfc;
+    white-space: nowrap;
 }
 
 .member-table th {
     text-align: left;
-    padding: 15px 75px;
-    font-weight: 600;
+    padding: 15px 20px;
+    font-weight: 700;
     font-size: 12px;
-    color: #777;
+    color: #444;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    white-space: nowrap;
+    border-bottom: 2px solid #eee;
 }
 
 .member-table td {
@@ -103,6 +104,8 @@
     color: #444;
     vertical-align: middle;
 }
+
+
 
 /* --- Status Button Badge --- */
 .status-badge {

@@ -1,55 +1,87 @@
-import React, { useState } from 'react';
-import { FaSearch } from 'react-icons/fa'; // Importing the search icon
-import './Borrow_return_management.css'; // Importing the CSS file
-
-// Mock Data: This would come from your backend API
-const initialBooks = [
-    { id: 101, title: 'Matilda', author: 'Roald Dahl', totalCopies: 3, availableCopies: 2, status: 'Available' },
-    { id: 102, title: 'Coraline', author: 'Neil Gaiman', totalCopies: 5, availableCopies: 0, status: 'Borrowed' },
-    { id: 103, title: 'Wonder', author: 'R.J. Palacio', totalCopies: 2, availableCopies: 1, status: 'Available' },
-    { id: 104, title: 'Holes', author: 'Louis Sachar', totalCopies: 4, availableCopies: 3, status: 'Available' },
-    { id: 105, title: 'The Hobbit', author: 'J.R.R. Tolkien', totalCopies: 7, availableCopies: 7, status: 'Available' },
-];
+import React, {useEffect, useState} from 'react';
+import { FaSearch } from 'react-icons/fa';
+import './Borrow_return_management.css';
 
 function BorrowReturnManagement() {
-    const [books, setBooks] = useState(initialBooks);
+    const [books, setBooks] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
 
-    // Filter books based on search term (title or author)
-    const filteredBooks = books.filter(book =>
-        book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        book.author.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
-    // Handler for the Borrow button
-    const handleBorrow = (bookId) => {
-        // In a real application, you'd send an API request to record the borrow
-        // and update the book's available copies and status.
-        console.log(`Attempting to borrow book with ID: ${bookId}`);
-
-        // For demonstration: Update state directly
-        setBooks(prevBooks =>
-            prevBooks.map(book => {
-                if (book.id === bookId && book.availableCopies > 0) {
-                    // Simulate borrowing: decrement available copies, update status if no copies left
-                    const newAvailableCopies = book.availableCopies - 1;
-                    const newStatus = newAvailableCopies === 0 ? 'Borrowed' : 'Available';
-                    alert(`"${book.title}" borrowed successfully!`);
-                    return { ...book, availableCopies: newAvailableCopies, status: newStatus };
-                } else if (book.id === bookId && book.availableCopies === 0) {
-                    alert(`"${book.title}" is currently out of stock.`);
+    const fetchBooks = () => {
+        fetch('http://localhost:8080/api/view/books')
+            .then(response => response.json())
+            .then(data => {
+                if (Array.isArray(data)) {
+                    setBooks(data);
+                } else {
+                    setBooks([]);
                 }
-                return book;
             })
-        );
+            .catch(error => console.error(error));
     };
 
-    // Helper to determine if the Borrow button should be disabled
-    const isBorrowDisabled = (availableCopies) => availableCopies === 0;
+    // --- 2. UPDATED: Call fetchBooks on load ---
+    useEffect(() => {
+        fetchBooks();
+    }, []);
 
-    // Helper to get status class (if you want different colors for Available/Borrowed)
-    const getStatusClassName = (status) => {
-        return status === 'Available' ? 'status-available' : 'status-borrowed';
+
+    const filteredBooks = books.filter(book => {
+        const name = book.bookName ? book.bookName.toLowerCase() : "";
+        return name.includes(searchTerm.toLowerCase());
+    });
+
+    // --- 3. UPDATED: Handle Borrow with API Call ---
+    const handleBorrow = async (bookId) => {
+        console.log(`Attempting to borrow book with ID: ${bookId}`);
+
+        try {
+            // Call the backend
+            const response = await fetch(`http://localhost:8080/api/books/borrow/${bookId}`, {
+                method: 'PUT',
+            });
+
+            if (response.ok) {
+                alert("Book Borrowed Successfully!");
+                // Refresh data immediately to show new quantity
+                fetchBooks();
+            } else {
+                // Read the error message from the backend (e.g., "Out of stock")
+                const errorMsg = await response.text();
+                alert("Failed: " + errorMsg);
+            }
+        } catch (error) {
+            console.error("Error borrowing book:", error);
+            alert("Connection error");
+        }
+    };
+
+    // Handle Return
+    const handleReturn = async (bookId) => {
+        console.log(`Returning book ID: ${bookId}`);
+
+        try {
+            // Call the NEW backend API
+            const response = await fetch(`http://localhost:8080/api/books/return/${bookId}`, {
+                method: 'PUT',
+            });
+
+            if (response.ok) {
+                alert("Book Returned Successfully!");
+                fetchBooks(); // Refresh the table immediately
+            } else {
+                alert("Failed to return book.");
+            }
+        } catch (error) {
+            console.error("Error returning book:", error);
+            alert("Connection error");
+        }
+    };
+
+
+
+    // Helper for Status Color
+    const getStatusClassName = (quantity) => {
+        return quantity > 0 ? 'status-available' : 'status-borrowed';
     };
 
     return (
@@ -62,7 +94,7 @@ function BorrowReturnManagement() {
                 <FaSearch className="search-icon" />
                 <input
                     type="text"
-                    placeholder="Search by book name or author"
+                    placeholder="Search by book name"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="search-input"
@@ -74,36 +106,45 @@ function BorrowReturnManagement() {
                     <thead>
                     <tr>
                         <th>Book ID</th>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Total Copies</th>
-                        <th>Available Copies</th>
+                        <th>Book name</th>
+                        <th>Quantity</th>
                         <th>Status</th>
-                        <th></th> {/* Empty header for the action button column */}
+                        <th>Borrow</th>
+                        <th>Return</th>
                     </tr>
                     </thead>
                     <tbody>
                     {filteredBooks.map(book => (
-                        <tr key={book.id}>
-                            <td>{book.id}</td>
-                            <td>{book.title}</td>
-                            <td>{book.author}</td>
-                            <td>{book.totalCopies}</td>
-                            <td>{book.availableCopies}</td>
+                        <tr key={book.bookId}>
+                            <td>{book.bookId}</td>
+                            <td>{book.bookName}</td>
+                            <td>{book.quantity}</td>
+
                             <td>
-                                    <span className={`book-status ${getStatusClassName(book.status)}`}>
-                                        {book.status}
-                                    </span>
+                                {/* Logic: If quantity > 0, it's Available */}
+                                <span className={`book-status ${getStatusClassName(book.quantity)}`}>
+                                    {book.quantity > 0 ? "Available" : "All books are borrowed"}
+                                </span>
                             </td>
                             <td>
                                 <button
                                     className="borrow-button"
-                                    onClick={() => handleBorrow(book.id)}
-                                    disabled={isBorrowDisabled(book.availableCopies)}
+                                    onClick={() => handleBorrow(book.bookId)}
+                                    disabled={book.quantity === 0}
                                 >
                                     Borrow
                                 </button>
                             </td>
+
+                            <td>
+                                <button
+                                    className="return-button" // We will style this next
+                                    onClick={() => handleReturn(book.bookId)}
+                                >
+                                    Return
+                                </button>
+                            </td>
+
                         </tr>
                     ))}
                     </tbody>

@@ -27,9 +27,6 @@ public class Employee {
     @Column(name = "Phone_Number")
     private int phoneNumber;
 
-    @Column(name = "Birthday")
-    private LocalDate birthday;
-
     @Column(name = "Username")
     private String username;
 
@@ -59,9 +56,6 @@ public class Employee {
     public int getPhoneNumber() {
         return phoneNumber;
     }
-    public LocalDate getBirthday() {
-        return birthday;
-    }
     public String getUsername() {
         return username;
     }
@@ -89,9 +83,6 @@ public class Employee {
     }
     public void setPhoneNumber(int phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-    public void setBirthday(LocalDate birthday) {
-        this.birthday = birthday;
     }
     public void setUsername(String username) {
         this.username = username;

@@ -3,6 +3,7 @@ import React,{useState , useEffect} from "react";
 import './Dashboard.css'
 import App from "./App";
 import CountUp from 'react-countup';
+import Tilt from 'react-parallax-tilt';
 
 
 //Add all icons
@@ -48,17 +49,29 @@ function Dashboard(){
 
 
     //Backend part for count active members
-    const [totalactive, setTotalActive] = useState(1);
+    const [activeMembers, setActiveMembers] = useState(0);
 
     useEffect(() => {
         // This calls your Spring Boot Backend
-        fetch('http://localhost:8080/api/active-members/count')
+        fetch('http://localhost:8080/api/members/active-count')
             .then(response => response.json())
             .then(data => {
                 console.log("Data fetched:", data);
-                setTotalActive(data); // Updates the variable
+                setActiveMembers(data); // Updates the variable
             })
             .catch(error => console.error("Error fetching data:", error));
+    }, []);
+
+    const [borrowedBooks, setBorrowedBooks] = useState(0);
+    useEffect(() => {
+        // ... (your existing fetches) ...
+
+        // Fetch Borrowed Count
+        fetch('http://localhost:8080/api/books/borrowed/total')
+            .then(res => res.json())
+            .then(data => setBorrowedBooks(data));
+
+
     }, []);
 
 
@@ -70,7 +83,7 @@ function Dashboard(){
             </div>
             {/*In here include Cards in the body*/}
             <div className="Dashboard-body">
-
+                <Tilt glareEnable={true} glareMaxOpacity={0.4} scale={1.05}>
                 <div className="stat-card">
                     <div className="card-top-row">
                         <div className="card-left-col">
@@ -84,8 +97,9 @@ function Dashboard(){
                         <CountUp end={totalBooks} duration={3} />
                     </div>
                 </div>
+                    </Tilt>
 
-
+                <Tilt glareEnable={true} glareMaxOpacity={0.4} scale={1.05}>
                 <div className="stat-card card-border-blue">
                     <div className="card-top-row">
                         <div className="card-icon icon-red">
@@ -97,8 +111,8 @@ function Dashboard(){
                         <CountUp end={totalMembers} duration={3} />
                     </div>
                 </div>
-
-
+                </Tilt>
+                <Tilt glareEnable={true} glareMaxOpacity={0.4} scale={1.05}>
                 <div className="stat-card card-border-purple">
                     <div className="card-top-row">
                         <div className="card-icon icon-purple">
@@ -106,10 +120,12 @@ function Dashboard(){
                         </div>
                         <div className="card-title">Borrowed Books</div>
                     </div>
-                    <div className="card-value">100</div>
+                    <div className="card-value">
+                        <CountUp end={borrowedBooks} duration={3}/>
+                    </div>
                 </div>
-
-
+                </Tilt>
+                <Tilt glareEnable={true} glareMaxOpacity={0.4} scale={1.05}>
                 <div className="stat-card card-border-orange">
                     <div className="card-top-row">
                         <div className="card-icon icon-orange">
@@ -119,8 +135,8 @@ function Dashboard(){
                     </div>
                     <div className="card-value">10</div>
                 </div>
-
-
+                </Tilt>
+                <Tilt glareEnable={true} glareMaxOpacity={0.4} scale={1.05}>
                 <div className="stat-card card-border-red">
                     <div className="card-top-row">
                         <div className="card-icon icon-red">
@@ -129,11 +145,11 @@ function Dashboard(){
                         <div className="card-title">Active Members</div>
                     </div>
                     <div className="card-value">
-                        <CountUp end={totalactive} duration={3} />
+                        <CountUp end={activeMembers} duration={3} />
                     </div>
                 </div>
-
-
+                </Tilt>
+                <Tilt glareEnable={true} glareMaxOpacity={0.4} scale={1.05}>
                 <div className="stat-card card-border-yellow">
                     <div className="card-top-row">
                         <div className="card-icon icon-yellow">
@@ -141,10 +157,12 @@ function Dashboard(){
                         </div>
                         <div className="card-title">Returned Books</div>
                     </div>
-                    <div className="card-value">90</div>
+                    <div className="card-value">
+
+                    </div>
                 </div>
 
-
+                </Tilt>
 
 
 

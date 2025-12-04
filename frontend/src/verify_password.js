@@ -74,7 +74,7 @@ function Verify_password() {
                     Please enter the 4-digit verification code sent to your email
                 </p>
 
-                <Link to="/Login">
+                <Link to="/">
                     <button className="back-btn">Back to Login</button>
                 </Link>
             </div>

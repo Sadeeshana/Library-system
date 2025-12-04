@@ -11,6 +11,8 @@ import ForgetPassword from "./Forget_password";
 import VerifyPassword from "./verify_password";
 import Members from "./Members_page";
 import BorrowReturn from "./Borrow_return_management";
+import Add_book from "./Add_book";
+import Libreg from "./librarian_register";
 
 function DashboardLayout({children}) {
     return (
@@ -56,6 +58,15 @@ function DashboardLayout({children}) {
                 />
 
                 <Route
+                path="/Books"
+                element={
+                    <DashboardLayout>
+                        <Add_book/>
+                    </DashboardLayout>
+                }
+                />
+
+                <Route
                     path="/borrow"
                     element={
                     <DashboardLayout>
@@ -81,6 +92,10 @@ function DashboardLayout({children}) {
                 <Route
                     path="/verify-password"
                     element={<VerifyPassword/>}
+                />
+                <Route
+                    path="/Lib-register"
+                    element={<Libreg/>}
                 />
 
 

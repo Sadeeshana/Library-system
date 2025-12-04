@@ -5,6 +5,9 @@ import Lottie  from "lottie-react";
 import bookAnimation from "./Bookslib.json"
 import Librarian from "./Librarian.json"
 import {Link, useNavigate} from "react-router-dom";
+import { motion } from 'framer-motion';
+import { FaUser, FaLock } from 'react-icons/fa';
+import toast, { Toaster } from 'react-hot-toast';
 
 function Login() {
     //Functions for the button
@@ -16,11 +19,15 @@ function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState(''); // Stores the server's response
+    const [isLoading, setIsLoading] = useState(false);
 
     // This function runs when the user clicks the "Login" button
     const handleSubmit = async (event) => {
         event.preventDefault(); // Stops the page from reloading
+        setIsLoading(true);
         setMessage(''); // Clear any old message
+
+
 
         try {
             // 1. Call our Spring Boot API (at port 8080)
@@ -34,20 +41,18 @@ function Login() {
 
             console.log(response.status);
 
-            // 2. Get the JSON response from Spring Boot
+            // 2. Get the JSON response
             const data = await response.json();
             console.log(data);
 
-            // 3. *** THIS IS THE FIX ***
+
             //    Check the 'status' from your backend
             if (data.status === 'success') {
                 console.log("Login successfull");
-                // Only navigate if the backend says "success"
-                navigate("/dashboard"); // <-- ADD THIS LINE
+                navigate("/dashboard");
             } else {
                 console.log("Login failed");
-                // If "error", just show the message
-                setMessage(data.message); // <-- ADD THIS else BLOCK
+                setMessage(data.message);
             }
 
         } catch (error) {
@@ -94,7 +99,7 @@ function Login() {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
-                        </div>
+
 
                         {/*Forget password*/}
                         <Link to="/forgot-password" className="forgot-link">
@@ -102,9 +107,11 @@ function Login() {
                         </Link>
 
                         {/*User registration*/}
-                        <Link to="/forgot-password" className="userre">
-                            Register new user
+                        <Link to="/Lib-register" className="userre">
+                            Registration
                         </Link>
+
+                        </div>
 
 
                         <button type="submit" className="login-button">Login</button>

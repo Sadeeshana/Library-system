@@ -22,9 +22,12 @@ public class Member{
     @Column(name = "Phone_number")
     private String memberPhoneNumber;
 
+    @Column(name = "Member_Status")
+    private String memberStatus;
+
 
     //Getters and setters
-    public int getID(){
+    public int getMemberId(){
         return memberId;
     }
     public String getMemberName(){
@@ -36,6 +39,10 @@ public class Member{
     public String getMemberPhoneNumber(){
         return memberPhoneNumber;
     }
+    public String getMemberStatus(){
+        return memberStatus;
+    }
+
     public void setMemberId(int memberId){
         this.memberId = memberId;
     }
@@ -47,6 +54,9 @@ public class Member{
     }
     public void setMemberPhoneNumber(String memberPhoneNumber){
         this.memberPhoneNumber = memberPhoneNumber;
+    }
+    public void setMemberStatus(String memberStatus){
+        this.memberStatus = memberStatus;
     }
 
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import './Sidebar.css';//Insert the css file
+import Login from './Login';
 import DashIcon from './Dash.json';
 import Book from './Book.json';
 import borrow from './borrow.json';
@@ -7,19 +8,61 @@ import reports from './Report.json';
 import Member from './Member.json';
 import logout from './logout.json';
 import Lottie from "lottie-react";
-import {Link, useLocation} from "react-router-dom";
+import {Link, useLocation,useNavigate} from "react-router-dom";
+import{motion, AnimatePresence} from "framer-motion";
 
 //Start main sidebar
 function Sidebar(){
     //Current URl
     const location = useLocation();
+    const navigate = useNavigate();
+    const[isLoggingOut , setIsLoggingOut] = React.useState(false);
+
+
+
+
     //Helper function for check path is active or not
     const getNavItemClass = (path) => {
         return location.pathname === path ? 'nav-item active' : 'nav-item';
     };
 
+    const handleLogout = (e) => {
+        e.preventDefault();
+        setIsLoggingOut(true);
+
+        setTimeout(() => {
+            navigate('/');
+        },1500);
+    };
+
+
 
     return(
+<>
+    {/*Logout animation*/}
+        <AnimatePresence>
+            {isLoggingOut && (
+                <motion.div
+                    className="logout-overlay"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 1 }}
+                >
+                    <motion.div
+                        initial={{ scale: 0.8, y: 20 }}
+                        animate={{ scale: 1, y: 0 }}
+                        transition={{ delay: 0.2 }}
+                        className="logout-message"
+                    >
+                        <h2>See you soon!</h2>
+                        <div className="spinner"></div>
+                        <p>Logging out...</p>
+                    </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>
+
         <div className="Sidebar">
             {/*Logo*/}
             <div className="Sidebarhead">
@@ -64,13 +107,19 @@ function Sidebar(){
             {/*Logout section*/}
             <div className="nav-footer">
                 <li className="nav-item">
-                    <a href="">
-                        <Lottie animationData={logout} className="nav-icon"/>
-                        Logout</a>
+
+                    <a href="#" onClick={handleLogout}>
+                        <Lottie
+                            animationData={logout}
+                            className="nav-icon"
+                            style={{ width: 28, height: 28 }}
+                        />
+                        Logout
+                    </a>
                 </li>
             </div>
         </div>
-
+</>
     );
 }
 

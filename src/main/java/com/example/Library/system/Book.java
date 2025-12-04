@@ -23,10 +23,31 @@ public class Book {
     @Column(name = "Book_Price")
     private int bookPrice;
 
+    @Column(name = "Book_Status")
+    private String bookStatus;
+
     @Column(name = "Quantity")
     private int quantity;
 
+    @Column(name = "Borrowed_Copies")
+    private Integer borrowedCopies;
+
+    @Column(name = "Total_Returns")
+    private Integer totalReturns;
     // --- Getters and Setters ---
+
+    public Integer getBorrowedCopies() { return borrowedCopies; }
+    public void setBorrowedCopies(Integer borrowedCopies) { this.borrowedCopies = borrowedCopies; }
+
+    public Integer getTotalReturns() { return totalReturns; }
+    public void setTotalReturns(Integer totalReturns) { this.totalReturns = totalReturns; }
+
+    public int getQuantity() {
+        return quantity;
+    }
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
     public Integer getBookId() {
         return bookId;
@@ -48,9 +69,14 @@ public class Book {
         return isbn;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public String getBookStatus() {
+        return bookStatus;
     }
+    public void setBookStatus(String bookStatus) {
+        this.bookStatus = bookStatus;
+    }
+
+
 
 
     public void setStatus(String isbn) {
@@ -71,16 +97,8 @@ public class Book {
     public void setBookPrice(int bookPrice) {
          this.bookPrice = bookPrice;
     }
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-    public String getStatus(){
-        if(quantity > 0){
-            return "Available";
-        }else {
-            return "Not Available";
-        }
-    }
+
+
 
 
 }

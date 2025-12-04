@@ -5,7 +5,7 @@ import {isRouteErrorResponse} from "react-router-dom"; // Importing the CSS file
 import { motion } from 'framer-motion';
 
 
-function BookListDashboard() { // Renamed the function to be descriptive
+function BookListDashboard() {
     const [books, setBooks] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -84,8 +84,6 @@ function BookListDashboard() { // Renamed the function to be descriptive
                         <th>ISBN</th>
                         <th>Author</th>
                         <th>Book Price</th>
-                        <th>Quantity</th>
-                        <th>Status</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
@@ -106,12 +104,7 @@ function BookListDashboard() { // Renamed the function to be descriptive
                             <td>{book.isbn}</td>
                             <td>{book.author}</td>
                             <td>{book.bookPrice}</td>
-                            <td>{book.quantity}</td>
-                            <td>
-                  <span className={`book-status ${getStatusClassName(book.status)}`}>
-                    {book.status}
-                  </span>
-                            </td>
+
                             <td className="actions-cell">
                                 <FaPencilAlt
                                     className="action-icon edit-icon"
