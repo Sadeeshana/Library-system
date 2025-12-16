@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+
 import './App.css';
 import Login from './Login';
 import './Login.css';
@@ -13,16 +14,32 @@ import Members from "./Members_page";
 import BorrowReturn from "./Borrow_return_management";
 import Add_book from "./Add_book";
 import Libreg from "./librarian_register";
+import Updatepass from "./Update_Password"
+import InstantDetails from "./InstantDetails"
+import { FaBars } from 'react-icons/fa';
+import {Snowfall} from "react-snowfall";
+
 
 function DashboardLayout({children}) {
+
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen);
+    };
+
     return (
         <div className="app-container">
-            {/* 2. Add the Sidebar component here */}
-            <Sidebar />
+
+            <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+
 
             {/* 3. This will be our main content area */}
             <div className="main-content">
+
+                <div className="content-area">
                 {children}
+                </div>
             </div>
         </div>
     )
@@ -33,7 +50,11 @@ function DashboardLayout({children}) {
 
     function App() {
         return (
-            // 3. DEFINE YOUR ROUTES
+
+
+
+
+
             <Routes>
                 {/* URL "/" will show the Login Page */}
                 <Route path="/" element={<Login />} />
@@ -97,10 +118,24 @@ function DashboardLayout({children}) {
                     path="/Lib-register"
                     element={<Libreg/>}
                 />
+                <Route
+                path="/Update-password"
+                element={<Updatepass />}
+                />
+
+                <Route
+                path="/InstantDetails"
+                element={
+                    <DashboardLayout>
+                    <InstantDetails />
+                    </DashboardLayout>
+                    }
+                />
 
 
 
             </Routes>
+
         );
     }
 
