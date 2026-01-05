@@ -37,5 +37,42 @@ public class MemberController {
         return memberRepository.save(member);
     }
 
+    //This function for deleting member
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteMember(@PathVariable int id) {
+        try {
+            if (memberRepository.existsById(id)) {
+                memberRepository.deleteById(id);
+
+                return ResponseEntity.ok("Member deleted successfully!");
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        }catch (Exception e) {
+            return ResponseEntity.status(500)
+                    .body("You can't delete this member. They have books to return");
+        }
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<String> updateMember(@PathVariable int id, @RequestBody Member updatedMember) {
+        Optional<Member> optionalMember = memberRepository.findById(id);
+
+        if(optionalMember.isPresent()){
+            Member member = optionalMember.get();
+
+            //Update
+            member.setMemberName(updatedMember.getMemberName());
+            member.setMemberEmail(updatedMember.getMemberEmail());
+            member.setMemberPhoneNumber(updatedMember.getMemberPhoneNumber());
+            member.setMemberStatus(updatedMember.getMemberStatus());
+
+            memberRepository.save(member);
+            return ResponseEntity.ok("Member updated successfully!");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
 }
