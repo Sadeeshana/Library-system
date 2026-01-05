@@ -134,7 +134,29 @@ public class BookController {
             return ResponseEntity.badRequest().body("Book is out of stock!");
         }
         }
+    //This is for edit book
+    // API to update an existing book
+    @PutMapping("/update/{id}")
+    public ResponseEntity<String> updateBook(@PathVariable Integer id, @RequestBody Book updatedBook) {
 
+        Optional<Book> optionalBook = bookRepository.findById(id);
+
+        if (optionalBook.isPresent()) {
+            Book book = optionalBook.get();
+
+            // Update fields
+            book.setBook_Name(updatedBook.getTitle());
+            book.setAuthor(updatedBook.getAuthor());
+            book.setIsbn(updatedBook.getIsbn());
+            book.setBookPrice(updatedBook.getBookPrice());
+            book.setQuantity(updatedBook.getQuantity());
+
+            bookRepository.save(book);
+            return ResponseEntity.ok("Book updated successfully!");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 
 
