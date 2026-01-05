@@ -158,6 +158,79 @@ public class BookController {
         }
     }
 
+    @PutMapping("/return/{id}")
+    public ResponseEntity<String> returnBook(@PathVariable Integer id) {
+
+        java.util.Optional<Book> optionalBook = bookRepository.findById(id);
+
+        if (optionalBook.isPresent()) {
+            Book book = optionalBook.get();
+
+            int currentBorrowed = (book.getBorrowedCopies() == null) ? 0 : book.getBorrowedCopies();
+
+            if (currentBorrowed > 0) {
+
+                book.setQuantity(book.getQuantity() + 1);
+
+
+                book.setBorrowedCopies(currentBorrowed - 1);
+
+                int currentReturns = (book.getTotalReturns() == null) ? 0 : book.getTotalReturns();
+                book.setTotalReturns(currentReturns + 1);
+
+                bookRepository.save(book);
+
+                return ResponseEntity.ok("Book returned successfully!");
+            } else {
+                return ResponseEntity.badRequest().body("Error: All copies are already in the library!");
+            }
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+    //All returns
+    @GetMapping("/returned/total")
+    public Long getTotalReturnedBooks() {
+        List<Book> books = bookRepository.findAll();
+        long sum = 0;
+        for (Book b : books) {
+            sum += (b.getTotalReturns() == null) ? 0 : b.getTotalReturns();
+        }
+        return sum;
+    }
+
+
+
+    //Return book
+    @PostMapping("/return")
+    public ResponseEntity<String> returnBook(@RequestBody Map<String,Integer> request) {
+
+        int bookId = request.get("bookId");
+        int memberId = request.get("memberId");
+
+        Optional<BorrowRecord> recordOpt = borrowRecordRepository.findByBookIdAndMemberIdAndStatus(bookId ,memberId,"Borrowed");
+
+        if(recordOpt.isPresent()){
+            BorrowRecord record = recordOpt.get();
+
+            record.setReturnDate(LocalDateTime.now());
+            record.setStatus("Returned");
+            borrowRecordRepository.save(record);
+
+            Optional<Book> bookOpt = bookRepository.findById(bookId);
+            if(bookOpt.isPresent()){
+                Book book = bookOpt.get();
+                book.setQuantity(book.getQuantity() + 1);
+                bookRepository.save(book);
+            }
+            return ResponseEntity.ok("Book returned successfully!");
+        }else{
+            return ResponseEntity.badRequest().body("This book has not any borrowers");
+        }
+
+    }
 
 
 }
