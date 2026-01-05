@@ -49,4 +49,31 @@ public class ForgotPasswordController {
             return Map.of("status", "error", "message", "Error sending email. Check server logs.");
         }
     }
+
+    //Verify otp
+    @PostMapping("/verify-otp")
+    public Map<String, String> verifyOtp(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        String code = request.get("code");
+        Employee employee = employeeRepository.findByEmail(email);
+
+        if (employee != null &&
+                employee.getOtpCode() != null &&
+                employee.getOtpCode().equals(code)
+        ){
+            return Map.of("status", "success", "message", "Otp code is already verified!");
+
+        }else  {
+            return Map.of("status", "error", "message", "Otp code is not valid!");
+        }
+
+    }
+
+    //Resend otp
+    @PostMapping("/resend-otp")
+    public Map<String, String> resendOtp(@RequestBody Map<String, String> request) {
+        return sendVerificationCode(request);
+    }
+
+
 }
