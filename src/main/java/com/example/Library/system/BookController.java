@@ -61,6 +61,42 @@ public class BookController {
 
 
     }
+    //These functions for the Dashboard
+    // All borrowed copies
+    @GetMapping("/borrowed/total")
+    public Long getTotalBorrowedBooks() {
+        List<Book> books = bookRepository.findAll();
+        long sum = 0;
+        for (Book b : books) {
+            sum += (b.getBorrowedCopies() == null) ? 0 : b.getBorrowedCopies();
+        }
+        return sum;
+    }
+    //This for add new book
+    @PostMapping("/add")
+    public ResponseEntity<String> addBook(@RequestBody Book book) {
+        try {
+            bookRepository.save(book);
+            return ResponseEntity.ok("Book added successfully!");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error adding book: " + e.getMessage());
+        }
+    }
+
+    //This function for deleting book
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteBook(@PathVariable int id) {
+        if(bookRepository.existsById(id)){
+            bookRepository.deleteById(id);
+
+            return ResponseEntity.ok("Book deleted successfully!");
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+
 
 
     //Borrow form
