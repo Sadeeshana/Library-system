@@ -39,14 +39,10 @@ public class EmployeeController {
             return Map.of("status", "error", "message", "Error saving to database.");
         }
     }
-
-
     //Show employee card
     @GetMapping("/total")
     public long getTotalEmployees() {
         return employeeRepository.count();
     }
-
-
 
 }

@@ -5,6 +5,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Column;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -30,12 +31,16 @@ public class Employee {
     @Column(name = "Username")
     private String username;
 
+    //Hide these columns
+    @JsonIgnore
     @Column(name = "Password")
     private String password;
 
     @Column(name = "Email")
     private String email;
 
+    //Hide these columns
+    @JsonIgnore
     @Column(name = "otp_code")
     private String otpCode;
 
