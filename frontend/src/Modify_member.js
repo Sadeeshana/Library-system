@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import './Modify_member.css'; // Importing the corresponding CSS file
+import './Modify_member.css';
 
 function ModifyMember() {
-    // State to hold form data (simulating initial data loaded for editing)
     const [formData, setFormData] = useState({
         memberId: '',
         fullName: '',
@@ -12,7 +11,6 @@ function ModifyMember() {
         membershipDuration: '',
     });
 
-    // Simulate fetching existing member data on load
     useEffect(() => {
         const existingMemberData = {
             memberId: 'L001',
@@ -25,7 +23,6 @@ function ModifyMember() {
         setFormData(existingMemberData);
     }, []);
 
-    // Handler for updating state when any input changes
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prevState => ({
@@ -34,15 +31,12 @@ function ModifyMember() {
         }));
     };
 
-    // Handler for the "Save Changes" action
     const handleSaveChanges = (e) => {
         e.preventDefault();
         console.log('Saving changes:', formData);
         alert('Changes saved successfully! Data sent to API (simulated).');
-        // In a real app: axios.put('/api/members/' + formData.memberId, formData);
     };
 
-    // Handler for the "Cancel" action
     const handleCancel = () => {
         console.log('Operation cancelled.');
         alert('Modification cancelled.');
@@ -58,7 +52,7 @@ function ModifyMember() {
 
                 <form onSubmit={handleSaveChanges} className="modify-member-form">
 
-                    {/* Member ID (Read-Only) */}
+                    {/* Member ID */}
                     <div className="form-group">
                         <label htmlFor="memberId">Member ID</label>
                         <div className="input-with-icon">
@@ -111,7 +105,7 @@ function ModifyMember() {
                         />
                     </div>
 
-                    {/* Membership Type (Dropdown) */}
+                    {/* Membership Type */}
                     <div className="form-group">
                         <label htmlFor="membershipType">Membership Type</label>
                         <select
@@ -126,7 +120,6 @@ function ModifyMember() {
                         </select>
                     </div>
 
-                    {/* Membership Duration (Number Input) */}
                     <div className="form-group">
                         <label htmlFor="membershipDuration">Membership duration (Months)</label>
                         <input

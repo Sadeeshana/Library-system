@@ -33,7 +33,10 @@ public class LoginController {
         if (employee.getPassword() != null && employee.getPassword().equals(password)) {
 
             // Success! Passwords match.
-            return Map.of("status", "success", "message", "Login Successful!");
+            return Map.of("status", "success",
+                    "message", "Login Successful!",
+                    "role", employee.getRole()
+                    );
 
         } else {
 

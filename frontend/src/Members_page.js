@@ -2,29 +2,62 @@ import React, {useEffect, useState} from 'react';
 import './Members_page.css';
 import {FaPencilAlt, FaTrashAlt} from "react-icons/fa";
 import { motion } from 'framer-motion';
+import AddMemberModal from "./Addmember";
+import EditMemberModel from "./Editmember";
 
 const MemberPage = () => {
-    // Mock data matching the uploaded image, ensuring full names are included
 
         const [members, setMembers] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    //Edit member state variables
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const[selectedMember, setSelectedMember] = useState(null);
+
+    const fetchMembers = () => {
+        fetch('http://localhost:8080/api/members/all')
+            .then(response => response.json())
+            .then(data => {
+                if (Array.isArray(data)) {
+                    setMembers(data);
+                } else {
+                    setMembers([]);
+                }
+            })
+            .catch(error => console.error("Error fetching members:", error));
+    };
+
+    // Initial Load
+    useEffect(() => {
+        fetchMembers();
+    }, []);
 
 
-        const handleEdit = (id) => {
-            console.log(`Editing book with ID: ${id}`);
-            alert(`Placeholder: Editing book with ID: ${id}`);
+        const handleEdit = (member) => {
+            setSelectedMember(member);
+            setIsEditModalOpen(true);
         };
 
-        const handleDelete = (id) => {
+        const handleDelete =  async (id) => {
             if (window.confirm(`Are you sure you want to delete book ID ${id}?`)) {
-                // Client-side delete for demo, replace with API call in production
-                setMembers(members.filter(member => member.id !== id));
-                console.log(`Book ID ${id} deleted.`);
+               try {
+                   const response = await fetch(`http://localhost:8080/api/members/delete/${id}`, {
+                       method: 'DELETE',
+                   });
+                   if (response.ok) {
+                       setMembers((prevMembers) => prevMembers.filter((member) => member.memberId !== id));
+                       alert("Successfully deleted!");
+                   } else {
+                       alert("Error happened");
+                   }
+
+               }catch (error) {
+                   console.log(error);
+               }
             }
         };
 
 
         useEffect(() => {
-            //Fetch the list from new api
             fetch('http://localhost:8080/api/members/all')
                 .then(response => response.json())
                 .then(data => {
@@ -38,16 +71,31 @@ const MemberPage = () => {
         return (
             <div className="member-content">
 
-                {/* Title - Matches the "Member" text in the image */}
                 <h1 className="page-title-standalone">Member</h1>
 
-                {/* Large Search Bar Area */}
                 <div className="member-search-container">
-                    {/* Re-using the existing 'large-search-bar' class, styled in CSS to match the image */}
                     <div className="large-search-bar">
                         <span>🔍</span>
                         <input type="text" placeholder="Search Members"/>
                     </div>
+                </div>
+                <div className="controls-container" style={{ marginBottom: '20px' }}>
+                    <button
+                        className="add-button"
+                        onClick={() => setIsModalOpen(true)}
+                        style={{
+                            backgroundColor: '#192A56',
+                            color: 'white',
+                            padding: '10px 20px',
+                            border: 'none',
+                            borderRadius: '5px',
+                            cursor: 'pointer',
+                            fontWeight: 'bold',
+                            fontSize: '1rem'
+                        }}
+                    >
+                        + Add Member
+                    </button>
                 </div>
 
                 {/* Data Table */}
@@ -84,7 +132,7 @@ const MemberPage = () => {
                                 <td className="actions-cell">
                                     <FaPencilAlt
                                         className="action-icon edit-icon"
-                                        onClick={() => handleEdit(member.memberId)}
+                                        onClick={() => handleEdit(member)}
                                         title="Edit"
                                     />
                                 </td>
@@ -104,6 +152,17 @@ const MemberPage = () => {
                         </tbody>
                     </table>
                 </div>
+                <AddMemberModal
+                    isOpen={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                    onMemberAdded={fetchMembers}
+                />
+                <EditMemberModel
+                isOpen={isEditModalOpen}
+                onClose={() => setIsEditModalOpen(false)}
+                onMemberUpdated={fetchMembers}
+                memberToEdit={selectedMember}
+                />
 
             </div>
         );

@@ -1,4 +1,3 @@
-// This is our new Login Page component
 import React, { useState } from 'react';
 import './Login.css'; // We'll add styles here
 import Lottie  from "lottie-react";
@@ -15,22 +14,20 @@ function Login() {
 
 
 
-    // These "state" variables store what the user types
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState(''); // Stores the server's response
     const [isLoading, setIsLoading] = useState(false);
 
-    // This function runs when the user clicks the "Login" button
+    // This function runs when the user clicks the Login button
     const handleSubmit = async (event) => {
-        event.preventDefault(); // Stops the page from reloading
+        event.preventDefault();
         setIsLoading(true);
-        setMessage(''); // Clear any old message
+        setMessage('');
 
 
 
         try {
-            // 1. Call our Spring Boot API (at port 8080)
             const response = await fetch('http://localhost:8080/api/login', {
                 method: 'POST',
                 headers: {
@@ -41,13 +38,12 @@ function Login() {
 
             console.log(response.status);
 
-            // 2. Get the JSON response
             const data = await response.json();
             console.log(data);
 
 
-            //    Check the 'status' from your backend
             if (data.status === 'success') {
+                localStorage.setItem("userRole", data.role);
                 console.log("Login successfull");
                 navigate("/dashboard");
             } else {
@@ -61,8 +57,6 @@ function Login() {
         }
     };
 
-    // 4. This is the JSX (HTML) that gets rendered
-    // 4. This is the JSX (HTML) that gets rendered
     return (
         <div className="login-container">
             <div className="right-panel">
@@ -116,7 +110,6 @@ function Login() {
 
                         <button type="submit" className="login-button">Login</button>
 
-                        {/* This will show "Login Successful!" or "Invalid username..." */}
                         {message && <p className="server-message">{message}</p>}
                     </form>
                 </div>

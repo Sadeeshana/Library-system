@@ -1,10 +1,9 @@
-/*main container*/
 .Dashboard-container {
     padding: 0;
 }
 
 
-/*blue top bar*/
+
 .dashboard-header {
     background-color:#0a2d4d;
 
@@ -12,7 +11,7 @@
     font-weight: bold;
     font-size: 24px;
 
-    /*Space*/
+
     padding: 20px 30px;
     border-radius: 0;
     margin-bottom: 30px;
@@ -61,16 +60,24 @@
     color: #333;
 }
 
-/*Card border colors*/
+
 .card-border-blue { border-left-color: #2980b9; }
 .card-border-purple { border-left-color: #8e44ad; }
 .card-border-orange { border-left-color: #e67e22; }
 .card-border-red { border-left-color: #e74c3c; }
 .card-border-yellow { border-left-color: #f1c40f; }
 
-/*Card icon colors*/
 .card-icon.icon-green { color: #27ae60; }
 .card-icon.icon-red { color: #e74c3c; }
 .card-icon.icon-purple { color: #8e44ad; }
 .card-icon.icon-orange { color: #e67e22; }
 .card-icon.icon-yellow { color: #f1c40f; }
+
+.centered-grid-item {
+    grid-column: span 2;
+    display: flex;
+    justify-content: center;
+}
+.centered-grid-item > * {
+    width: calc(50%);
+}

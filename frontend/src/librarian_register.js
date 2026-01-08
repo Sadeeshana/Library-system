@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import "./librarian_register.css";
 
 function LibrarianRegister() {
@@ -32,7 +32,7 @@ function LibrarianRegister() {
             const response = await fetch('http://localhost:8080/api/employee/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData) // Send all form data as JSON
+                body: JSON.stringify(formData)
             });
 
             const data = await response.json();
@@ -52,82 +52,101 @@ function LibrarianRegister() {
 
 
     return (
-        <div className="container">
+        <div className="reg-page-bg">
+            <div className="reg-card-popup">
+                <h2 className="reg-title">Librarian Register</h2>
+                <p className="reg-subtitle">Create a new account</p>
 
-            <div className="left-section">
-                <img src="/library-image.png" className="side-img" alt="Library" />
-            </div>
+                <form className="reg-form" onSubmit={handleRegister}>
 
-            <div className="right-section">
-                <h2>Librarian Register</h2>
+                    <div className="form-row">
+                        <div className="form-col">
+                            <label className="reg-label">Name</label>
+                            <input
+                                name="name"
+                                type="text"
+                                className="reg-input"
+                                placeholder="Enter Name"
+                                value={formData.name}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div className="form-col">
+                            <label className="reg-label">Address</label>
+                            <input
+                                name="address"
+                                type="text"
+                                className="reg-input"
+                                placeholder="Enter Address"
+                                value={formData.address}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                    </div>
 
-                <form className="form" onSubmit={handleRegister}>
+                    <div className="form-row">
+                        <div className="form-col">
+                            <label className="reg-label">Email</label>
+                            <input
+                                name="email"
+                                type="email"
+                                className="reg-input"
+                                placeholder="Enter Email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div className="form-col">
+                            <label className="reg-label">Phone</label>
+                            <input
+                                name="phoneNumber"
+                                type="text"
+                                className="reg-input"
+                                placeholder="Enter Phone"
+                                value={formData.phoneNumber}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                    </div>
 
-                    <label>Employee ID</label>
-                    <input type="text" placeholder="Auto-Generated" disabled={true} />
+                    <div className="form-row">
+                        <div className="form-col">
+                            <label className="reg-label">Username</label>
+                            <input
+                                name="username"
+                                type="text"
+                                className="reg-input"
+                                placeholder="Username"
+                                value={formData.username}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div className="form-col">
+                            <label className="reg-label">Password</label>
+                            <input
+                                name="password"
+                                type="password"
+                                className="reg-input"
+                                placeholder="Password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                    </div>
 
-                    <label>Employee Name</label>
-                    <input
-                        name="name"
-                        type="text"
-                        placeholder="Enter your Name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                    />
+                    <button className="reg-btn">Register</button>
 
-                    <label>Address</label>
-                    <input
-                        name="address"
-                        type="text"
-                        placeholder="Enter your Home address"
-                        value={formData.address}
-                        onChange={handleChange}
-                        required
-                    />
+                    <button type="button" className="reg-cancel-btn" onClick={() => navigate('/')}>
+                        Cancel
+                    </button>
 
-                    <label>E-mail</label>
-                    <input
-                        name="email"
-                        type="email"
-                        placeholder="Enter your E-mail"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                    />
-
-                    <label>Phone Number</label>
-                    <input
-                        name="phoneNumber"
-                        type="text"
-                        placeholder="Enter your Phone Number"
-                        value={formData.phoneNumber}
-                        onChange={handleChange}
-                        required
-                    />
-
-                    <label>Username</label>
-                    <input
-                        name="username"
-                        type="text"
-                        placeholder="Enter Username"
-                        value={formData.username}
-                        onChange={handleChange}
-                        required
-                    />
-
-                    <label>Password</label>
-                    <input
-                        name="password"
-                        type="password"
-                        placeholder="Enter Password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        required
-                    />
-
-                    <button className="register-btn">Register</button>
-                    {message && <p className="server-message" style={{color: 'red'}}>{message}</p>}
+                    {message && <p className="reg-message error">{message}</p>}
                 </form>
 
             </div>

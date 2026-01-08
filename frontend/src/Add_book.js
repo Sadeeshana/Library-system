@@ -1,54 +1,80 @@
 import React, {useEffect, useState} from 'react';
 import { FaPencilAlt, FaTrashAlt, FaSearch } from 'react-icons/fa';
 import './Add_book.css';
-import {isRouteErrorResponse} from "react-router-dom"; // Importing the CSS file
+import {isRouteErrorResponse} from "react-router-dom";
 import { motion } from 'framer-motion';
+import AddBookModal from './Newbook';
+import EditBookModal from './Editbook';
 
 
 function BookListDashboard() {
     const [books, setBooks] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    // 1. Search Logic: Filters the books based on title or author match
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const[selectedBook, setSelectedBook] = useState(null);
+
+
+    //Search filter
     const filteredBooks = books.filter(book =>
         book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         book.author.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    // 2. Action Handlers (Placeholders)
     const handleAddBook = () => {
-        console.log('Opening Add Book Modal/Form...');
-        alert('Placeholder: Opens a form to add a new book.');
+        setIsModalOpen(true);
     };
 
-    const handleEdit = (id) => {
-        console.log(`Editing book with ID: ${id}`);
-        alert(`Placeholder: Editing book with ID: ${id}`);
+    const handleEdit = (book) => {
+        setSelectedBook(book);
+        setIsEditModalOpen(true);
     };
 
-    const handleDelete = (id) => {
+    const handleDelete = async (id) => {
         if (window.confirm(`Are you sure you want to delete book ID ${id}?`)) {
-            // Client-side delete for demo, replace with API call in production
-            setBooks(books.filter(book => book.id !== id));
-            console.log(`Book ID ${id} deleted.`);
+            try{
+                const response = await fetch(`http://localhost:8080/api/books/delete/${id}`,{
+                   method: 'DELETE',
+                });
+
+                if (response.ok) {
+                    setBooks(books.filter(book => book.id !== id));
+                    alert("Successfully deleted book");
+                }else {
+                    alert("Error occured!");
+                }
+            }catch (error) {
+                console.log(error);
+            }
         }
     };
 
-    // 3. Status Badge Helper for dynamic styling
     const getStatusClassName = (status) => {
         return status === 'Available' ? 'status-available' : 'status-borrowed';
     };
 
-    useEffect(() => {
-        //Fetch the list from new api
+    const fetchBooks = () => {
         fetch('http://localhost:8080/api/books/all')
-        .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                setBooks(data);
+            .then(response => {
+                if (!response.ok) throw new Error("Failed to fetch");
+                return response.json();
             })
-        .catch(error => console.error(error));
-    },[]);
+            .then(data => {
+                // Safety check
+                if(Array.isArray(data)) {
+                    setBooks(data);
+                } else {
+                    setBooks([]);
+                }
+            })
+            .catch(error => console.error(error));
+    };
+
+    // Load books
+    useEffect(() => {
+        fetchBooks();
+    }, []);
 
     return (
         <div className="book-list-page">
@@ -61,7 +87,7 @@ function BookListDashboard() {
                     + Add Book
                 </button>
 
-                {/* Search Input Area */}
+                {/* Search input area */}
                 <div className="search-container">
                     <FaSearch className="search-icon" />
                     <input
@@ -74,7 +100,7 @@ function BookListDashboard() {
                 </div>
             </div>
 
-            {/* Books Table */}
+            {/* Books table */}
             <div className="book-table-container">
                 <table>
                     <thead>
@@ -89,10 +115,19 @@ function BookListDashboard() {
                     </tr>
                     </thead>
                     <tbody>
+                    <AddBookModal
+                        isOpen={isModalOpen}
+                        onClose={() => setIsModalOpen(false)}
+                        onBookAdded={fetchBooks}
+                    />
+                    <EditBookModal
+                        isOpen={isEditModalOpen}
+                        onClose={() => setIsEditModalOpen(false)}
+                        onBookUpdated={fetchBooks}
+                        bookToEdit={selectedBook}
+                    />
 
-                    {/* Render rows based on filteredBooks array */}
                     {filteredBooks.map((book , index) => (
-                        //Waterfall effect
                         <motion.tr key={book.bookId}
                         initial={{opacity:0,y:0}}
                                    animate={{opacity:1,y:0}}
@@ -108,14 +143,14 @@ function BookListDashboard() {
                             <td className="actions-cell">
                                 <FaPencilAlt
                                     className="action-icon edit-icon"
-                                    onClick={() => handleEdit(book.id)}
+                                    onClick={() => handleEdit(book)}
                                     title="Edit"
                                 />
                             </td>
                             <td className="actions-cell">
                                 <FaTrashAlt
                                     className="action-icon delete-icon"
-                                    onClick={() => handleDelete(book.id)}
+                                    onClick={() => handleDelete(book.bookId)}
                                     title="Delete"
                                 />
                             </td>
@@ -125,6 +160,7 @@ function BookListDashboard() {
                     </tbody>
                 </table>
             </div>
+
         </div>
     );
 }

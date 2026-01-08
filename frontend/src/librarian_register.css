@@ -1,70 +1,118 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
-
-.container {
-    width: 100%;
+.reg-page-bg {
+    width: 100vw;
     height: 100vh;
-    display: flex;
-}
-
-.left-section {
-    width: 45%;
-    background: #0b3d91;
+    background-color: #192A56;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.side-img {
-    width: 90%;
-}
 
-.right-section {
-    width: 75%;
+.reg-card-popup {
+    background-color: white;
+    width: 100%;
+    max-width: 600px;
     padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    animation: slideDown 0.5s ease-out;
 }
 
-.right-section h2 {
+@keyframes slideDown {
+    from { transform: translateY(-30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+
+.reg-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333;
     text-align: center;
-    margin-bottom: 25px;
-    font-size: 32px;
-    font-weight: bold;
+    margin-bottom: 5px;
 }
 
-form {
+.reg-subtitle {
+    font-size: 0.9rem;
+    color: #666;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+
+.form-row {
     display: flex;
-    flex-direction: column;
-    width: 80%;
-    margin: auto;
-}
-
-label {
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-input {
-    margin-top: 5px;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
+    gap: 20px;
     margin-bottom: 15px;
 }
 
-.register-btn {
-    background: #8bb6ff;
-    padding: 12px;
-    border: none;
-    border-radius: 10px;
-    font-size: 18px;
-    cursor: pointer;
+.form-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
-.register-btn:hover {
-    background: #6ca6ff;
+
+.reg-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 5px;
 }
-/**/
+
+.reg-input {
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.reg-input:focus {
+    border-color: #192A56;
+}
+
+
+.reg-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #192A56;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s;
+}
+
+.reg-btn:hover {
+    background-color: #273c75;
+}
+
+.reg-cancel-btn {
+    width: 100%;
+    padding: 10px;
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.reg-cancel-btn:hover {
+    text-decoration: underline;
+    color: #333;
+}
+
+
+.reg-message {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+.reg-message.error { color: red; }

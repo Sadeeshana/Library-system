@@ -1,5 +1,5 @@
 import React from "react";
-import './Sidebar.css';//Insert the css file
+import './Sidebar.css';
 import Login from './Login';
 import DashIcon from './Dash.json';
 import Book from './Book.json';
@@ -7,18 +7,20 @@ import borrow from './borrow.json';
 import reports from './Report.json';
 import Member from './Member.json';
 import logout from './logout.json';
+import Udetails from './Udetails.json';
 import Lottie from "lottie-react";
 import {Link, useLocation,useNavigate} from "react-router-dom";
 import{motion, AnimatePresence} from "framer-motion";
 
 //Start main sidebar
 function Sidebar(){
-    //Current URl
     const location = useLocation();
     const navigate = useNavigate();
     const[isLoggingOut , setIsLoggingOut] = React.useState(false);
 
 
+    //Get user role from local storage
+    const userRole = localStorage.getItem("userRole");
 
 
     //Helper function for check path is active or not
@@ -29,6 +31,7 @@ function Sidebar(){
     const handleLogout = (e) => {
         e.preventDefault();
         setIsLoggingOut(true);
+        localStorage.removeItem("userRole");
 
         setTimeout(() => {
             navigate('/');
@@ -80,8 +83,9 @@ function Sidebar(){
                     <Lottie animationData={DashIcon} className="nav-icon"/>
                         Dashboard
                     </Link>
-
                 </li>
+                {/*Add admin only pages*/}
+
                 <li className={getNavItemClass('/Books')}>
                    <Link  to="/Books">
                         <Lottie animationData={Book} className="nav-icon"/>
@@ -97,12 +101,23 @@ function Sidebar(){
                         <Lottie animationData={borrow} className="nav-icon"/>
                         Borrow</Link>
                 </li>
+                {userRole === 'Admin' && (
                 <li className={getNavItemClass('/Report')}>
                     <Link to="/Report">
                         <Lottie animationData={reports} className="nav-icon"/>
                         Reports
                     </Link>
                 </li>
+                    )}
+                {userRole === 'Admin' && (
+                    <li className={getNavItemClass('/InstantDetails')}>
+                        <Link  to="/InstantDetails">
+                            <Lottie animationData={Udetails} className="nav-icon"/>
+                            Instant details
+                        </Link>
+                    </li>
+                )}
+
             </ul>
             {/*Logout section*/}
             <div className="nav-footer">

@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 public interface BookRepository extends JpaRepository<Book, Integer> {
     // JpaRepository already has a .count() method built-in!
     // We don't need to write any SQL here for the total count.
+
 }

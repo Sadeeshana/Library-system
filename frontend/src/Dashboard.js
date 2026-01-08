@@ -1,4 +1,3 @@
-
 import React,{useState , useEffect} from "react";
 import './Dashboard.css'
 import App from "./App";
@@ -52,7 +51,7 @@ function Dashboard(){
     const [activeMembers, setActiveMembers] = useState(0);
 
     useEffect(() => {
-        // This calls your Spring Boot Backend
+
         fetch('http://localhost:8080/api/members/active-count')
             .then(response => response.json())
             .then(data => {
@@ -64,15 +63,24 @@ function Dashboard(){
 
     const [borrowedBooks, setBorrowedBooks] = useState(0);
     useEffect(() => {
-        // ... (your existing fetches) ...
 
-        // Fetch Borrowed Count
+
         fetch('http://localhost:8080/api/books/borrowed/total')
             .then(res => res.json())
             .then(data => setBorrowedBooks(data));
 
 
     }, []);
+
+    //Show total employee
+    const [totalEmployees, setTotalEmployees] = useState(0);
+
+    useEffect(() => {
+        fetch('http://localhost:8080/api/employee/total')
+            .then(response => response.json())
+            .then(data => setTotalEmployees(data))
+        .catch(error => console.error("Error fetching data:", error));
+    },[]);
 
 
     return (
@@ -81,7 +89,6 @@ function Dashboard(){
                 Dashboard
 
             </div>
-            {/*In here include Cards in the body*/}
             <div className="Dashboard-body">
                 <Tilt glareEnable={true} glareMaxOpacity={0.4} scale={1.05}>
                 <div className="stat-card">
@@ -91,7 +98,7 @@ function Dashboard(){
                             <BsBookFill/>
                         </div>
                         </div>
-                        <div className="card-title">Total books</div>
+                        <div className="card-title">Total Books By Name</div>
                     </div>
                     <div className="card-value">
                         <CountUp end={totalBooks} duration={3} />
@@ -112,13 +119,28 @@ function Dashboard(){
                     </div>
                 </div>
                 </Tilt>
+                <div className="centered-grid-item">
+                    <Tilt glareEnable={true} glareMaxOpacity={0.4} scale={1.05}>
+                        <div className="stat-card card-border-red">
+                            <div className="card-top-row">
+                                <div className="card-icon icon-red">
+                                    <BsPersonCheckFill />
+                                </div>
+                                <div className="card-title">Active Members</div>
+                            </div>
+                            <div className="card-value">
+                                <CountUp end={activeMembers} duration={3} />
+                            </div>
+                        </div>
+                    </Tilt>
+                </div>
                 <Tilt glareEnable={true} glareMaxOpacity={0.4} scale={1.05}>
                 <div className="stat-card card-border-purple">
                     <div className="card-top-row">
                         <div className="card-icon icon-purple">
                             <BsFillBookmarkCheckFill />
                         </div>
-                        <div className="card-title">Borrowed Books</div>
+                        <div className="card-title"> Total Borrowed Books From Start </div>
                     </div>
                     <div className="card-value">
                         <CountUp end={borrowedBooks} duration={3}/>
@@ -131,38 +153,15 @@ function Dashboard(){
                         <div className="card-icon icon-orange">
                             <BsFillClockFill />
                         </div>
-                        <div className="card-title">Overdue Books</div>
-                    </div>
-                    <div className="card-value">10</div>
-                </div>
-                </Tilt>
-                <Tilt glareEnable={true} glareMaxOpacity={0.4} scale={1.05}>
-                <div className="stat-card card-border-red">
-                    <div className="card-top-row">
-                        <div className="card-icon icon-red">
-                            <BsPersonCheckFill />
-                        </div>
-                        <div className="card-title">Active Members</div>
+                        <div className="card-title">Total Employees</div>
                     </div>
                     <div className="card-value">
-                        <CountUp end={activeMembers} duration={3} />
+                        <CountUp end={totalEmployees} duration={3}/>
                     </div>
                 </div>
                 </Tilt>
-                <Tilt glareEnable={true} glareMaxOpacity={0.4} scale={1.05}>
-                <div className="stat-card card-border-yellow">
-                    <div className="card-top-row">
-                        <div className="card-icon icon-yellow">
-                            <BsArrowUpSquareFill />
-                        </div>
-                        <div className="card-title">Returned Books</div>
-                    </div>
-                    <div className="card-value">
 
-                    </div>
-                </div>
 
-                </Tilt>
 
 
 

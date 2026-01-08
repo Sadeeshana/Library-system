@@ -1,10 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import { FaSearch } from 'react-icons/fa';
 import './Borrow_return_management.css';
+import BorrowModal from "./Borrowform";
+import { motion, AnimatePresence } from 'framer-motion';
+import ReturnModal from './Returnform'
+
 
 function BorrowReturnManagement() {
     const [books, setBooks] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedBook, setSelectedBook] = useState(null);
+    const [modalAction, setModalAction] = useState('Borrow');
+    const [isReturnModalOpen, setIsReturnModalOpen] = useState(false);
 
     const fetchBooks = () => {
         fetch('http://localhost:8080/api/view/books')
@@ -19,7 +27,7 @@ function BorrowReturnManagement() {
             .catch(error => console.error(error));
     };
 
-    // --- 2. UPDATED: Call fetchBooks on load ---
+    //Load books
     useEffect(() => {
         fetchBooks();
     }, []);
@@ -30,59 +38,36 @@ function BorrowReturnManagement() {
         return name.includes(searchTerm.toLowerCase());
     });
 
-    // --- 3. UPDATED: Handle Borrow with API Call ---
-    const handleBorrow = async (bookId) => {
-        console.log(`Attempting to borrow book with ID: ${bookId}`);
+    const openModal = (book, action) => {
+        setSelectedBook(book); // Now 'book' is defined!
+        setModalAction(action);
+        setIsModalOpen(true);
+    };
 
-        try {
-            // Call the backend
-            const response = await fetch(`http://localhost:8080/api/books/borrow/${bookId}`, {
-                method: 'PUT',
-            });
+ //Handle borrow
+    const handleBorrow = async (book) => {
+       setSelectedBook(book);
 
-            if (response.ok) {
-                alert("Book Borrowed Successfully!");
-                // Refresh data immediately to show new quantity
-                fetchBooks();
-            } else {
-                // Read the error message from the backend (e.g., "Out of stock")
-                const errorMsg = await response.text();
-                alert("Failed: " + errorMsg);
-            }
-        } catch (error) {
-            console.error("Error borrowing book:", error);
-            alert("Connection error");
-        }
+       setModalAction('Borrow');
+
+        setIsModalOpen(true);
     };
 
     // Handle Return
-    const handleReturn = async (bookId) => {
-        console.log(`Returning book ID: ${bookId}`);
-
-        try {
-            // Call the NEW backend API
-            const response = await fetch(`http://localhost:8080/api/books/return/${bookId}`, {
-                method: 'PUT',
-            });
-
-            if (response.ok) {
-                alert("Book Returned Successfully!");
-                fetchBooks(); // Refresh the table immediately
-            } else {
-                alert("Failed to return book.");
-            }
-        } catch (error) {
-            console.error("Error returning book:", error);
-            alert("Connection error");
-        }
+    const handleReturn = (book) => {
+        setSelectedBook(book);
+        setIsReturnModalOpen(true);
     };
-
 
 
     // Helper for Status Color
     const getStatusClassName = (quantity) => {
         return quantity > 0 ? 'status-available' : 'status-borrowed';
     };
+
+
+
+
 
     return (
         <div className="borrow-return-page">
@@ -102,7 +87,7 @@ function BorrowReturnManagement() {
             </div>
 
             <div className="book-table-container">
-                <table>
+                <table className="borrow-table">
                     <thead>
                     <tr>
                         <th>Book ID</th>
@@ -114,14 +99,29 @@ function BorrowReturnManagement() {
                     </tr>
                     </thead>
                     <tbody>
-                    {filteredBooks.map(book => (
-                        <tr key={book.bookId}>
+
+                        <AnimatePresence>
+                            {filteredBooks.map((book, index) => (
+                                <motion.tr
+                                    key={book.bookId}
+                                    layout
+
+                                    initial={{ opacity: 0, x: -50 }}
+
+                                    animate={{ opacity: 1, x: 0 }}
+
+                                    exit={{ opacity: 0, x: -50 }}
+
+                                    transition={{ duration: 0.3, delay: index * 0.1 }}
+
+                                    whileHover={{ scale: 1.01, backgroundColor: "#f0f8ff" }}
+                                >
                             <td>{book.bookId}</td>
                             <td>{book.bookName}</td>
                             <td>{book.quantity}</td>
 
                             <td>
-                                {/* Logic: If quantity > 0, it's Available */}
+
                                 <span className={`book-status ${getStatusClassName(book.quantity)}`}>
                                     {book.quantity > 0 ? "Available" : "All books are borrowed"}
                                 </span>
@@ -129,7 +129,7 @@ function BorrowReturnManagement() {
                             <td>
                                 <button
                                     className="borrow-button"
-                                    onClick={() => handleBorrow(book.bookId)}
+                                    onClick={() => handleBorrow(book)}
                                     disabled={book.quantity === 0}
                                 >
                                     Borrow
@@ -139,16 +139,37 @@ function BorrowReturnManagement() {
                             <td>
                                 <button
                                     className="return-button" // We will style this next
-                                    onClick={() => handleReturn(book.bookId)}
+                                    onClick={() => handleReturn(book)}
                                 >
                                     Return
                                 </button>
                             </td>
 
-                        </tr>
+                                </motion.tr>
+
                     ))}
+                        </AnimatePresence>
                     </tbody>
                 </table>
+
+
+                {/*Action type modals for buttons*/}
+                <BorrowModal
+                    isOpen={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                    book={selectedBook}
+                    actionType={modalAction}
+                    onSuccess={fetchBooks}
+                />
+
+                <ReturnModal
+                    isOpen={isReturnModalOpen}
+                    onClose={() => setIsReturnModalOpen(false)}
+                    book={selectedBook}
+                    onSuccess={fetchBooks}
+                />
+
+
             </div>
         </div>
     );

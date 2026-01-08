@@ -6,11 +6,10 @@
     overflow: hidden;
 }
 
-/* --- PANELS --- */
 
 .right-panel {
     flex: 1;
-    background-color: #ffffff; /* White background for the Lottie animation */
+    background-color: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -19,7 +18,6 @@
 
 .left-panel {
     flex: 1;
-
     background: linear-gradient(135deg, #0a2d4d 0%, #021222 100%);
     display: flex;
     justify-content: center;
@@ -33,7 +31,7 @@
     max-width: 380px;
     padding: 40px;
 
-    /* THE GLASS EFFECT */
+
     background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -56,7 +54,7 @@
     display: block;
     font-size: 0.9rem;
     font-weight: 600;
-    color: #e0e0e0; /* Light grey text */
+    color: #e0e0e0;
     margin-bottom: 8px;
     margin-left: 5px;
 }
@@ -126,7 +124,7 @@
     display: table;
 }
 
-/* --- BUTTON --- */
+
 .login-button {
     width: 100%;
     padding: 14px;
@@ -159,6 +157,6 @@
     text-align: center;
     margin-top: 20px;
     font-size: 0.9rem;
-    color: #ff8a80; /* Light red for errors */
+    color: #ff8a80;
     font-weight: 500;
 }

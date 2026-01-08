@@ -4,12 +4,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 
 @Entity
 @Table(name = "Members")
 
 public class Member{
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MemberID")
     private int memberId;
 

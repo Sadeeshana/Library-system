@@ -1,17 +1,14 @@
-/* MemberPage.css */
-
-/* --- Root Variables for Color Consistency --- */
 :root {
-    --active-badge-bg: #81d4fa; /* Light Teal color for badge background */
-    --active-badge-text: #0f4c75; /* Dark Teal color for badge text */
+    --active-badge-bg: #81d4fa;
+    --active-badge-text: #0f4c75;
     --table-header-bg: #f1f1f1;
-    --border-color-light: #e0e0e0; /* Lighter border for the search and table wrapper */
+    --border-color-light: #e0e0e0;
     --text-color-dark: #333;
 }
 
-/* --- Main Content Area --- */
+
 .member-content {
-    /* Padding to match the space on the right of the sidebar */
+
     padding: 0 40px;
     background-color: #f7f7f7;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -19,41 +16,40 @@
     height: 100%;
 }
 
-/* --- Page Title (Standalone) --- */
 .page-title-standalone {
     font-size: 32px;
     font-weight: bold;
     color: var(--text-color-dark);
-    margin: 20px 0 30px 0; /* Adjusted top margin to move it up */
+    margin: 20px 0 30px 0;
 }
 
-/* Hidden/Unused Header Styles (from the original provided code) */
+
 .page-header { display: none; }
 .page-title { display: none; }
 
 
-/* --- Member Search Bar Container --- */
+
 .member-search-container {
     margin-bottom: 30px;
 }
 
-/* --- Large Search Bar FIX to match the image --- */
+
 .large-search-bar {
     width: 100%;
-    /* Padding to visually match the height in the image */
+
     padding: 10px 15px;
-    /* Key Fix: Simple, light border and radius */
+
     border: 1px solid var(--border-color-light);
     border-radius: 8px;
     background-color: #fff;
     box-sizing: border-box;
     display: flex;
     align-items: center;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* Subtle shadow for depth */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .large-search-bar span {
-    /* Style for the magnifying glass icon */
+
     color: #888;
     font-size: 16px;
     margin-right: 10px;
@@ -70,7 +66,7 @@
     flex-grow: 1;
 }
 
-/* --- Table Styling --- */
+
 
 
 .member-table {

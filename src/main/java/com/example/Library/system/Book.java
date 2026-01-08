@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class Book {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-increment ID
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto increment ID
     @Column(name = "BookID")
     private Integer bookId;
 
@@ -67,6 +67,9 @@ public class Book {
 
     public String getIsbn() {
         return isbn;
+    }
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
     public String getBookStatus() {

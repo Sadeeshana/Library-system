@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import './Member_details.css'; // Import the CSS file below
+import './Member_details.css';
 
 const MemberDetails = () => {
     const [member, setMember] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // In a real app, fetch from:: http://localhost:8080/api/members/54854
-        // For this demo, we will simulate the fetch so you can see the UI immediately.
         const fetchData = async () => {
             try {
                 // Simulate API delay
