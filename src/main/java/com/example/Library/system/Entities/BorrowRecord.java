@@ -26,7 +26,7 @@ public class BorrowRecord {
     @Column(name = "Status")
     private String status;
 
-    // --- Setters ---
+    //Setters
     public void setTransactionId(Integer transactionId) { this.transactionId = transactionId; }
     public void setBookId(Integer bookId) { this.bookId = bookId; }
     public void setMemberId(Integer memberId) { this.memberId = memberId; }
@@ -34,7 +34,7 @@ public class BorrowRecord {
     public void setReturnDate(LocalDateTime returnDate) { this.returnDate = returnDate; }
     public void setStatus(String status) { this.status = status; }
 
-    // --- Getters ---
+    //Getters
     public Integer getTransactionId() { return transactionId; }
     public Integer getBookId() { return bookId; }
     public Integer getMemberId() { return memberId; }

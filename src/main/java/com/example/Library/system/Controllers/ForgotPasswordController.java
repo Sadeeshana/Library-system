@@ -43,7 +43,7 @@ public class ForgotPasswordController {
         employee.setOtpCode(otp);
         employeeRepository.save(employee);
 
-        // 4. SEND: Email the code to the user
+        //Email the code to the user
         try {
             emailService.sendEmail(email, "Password Reset Code", "Your verification code is: " + otp);
             return Map.of("status", "success", "message", "Code sent successfully!");
