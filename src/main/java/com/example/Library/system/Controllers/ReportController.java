@@ -1,5 +1,12 @@
-package com.example.Library.system;
+package com.example.Library.system.Controllers;
 
+import com.example.Library.system.Entities.Book;
+import com.example.Library.system.Entities.BorrowRecord;
+import com.example.Library.system.Entities.Member;
+import com.example.Library.system.Entities.PDFGen;
+import com.example.Library.system.Repositories.BookRepository;
+import com.example.Library.system.Repositories.BorrowRecordRepository;
+import com.example.Library.system.Repositories.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;

@@ -1,5 +1,7 @@
-package com.example.Library.system;
+package com.example.Library.system.Controllers;
 
+import com.example.Library.system.Entities.BookView;
+import com.example.Library.system.Repositories.BookViewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

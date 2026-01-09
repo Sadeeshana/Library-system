@@ -1,5 +1,11 @@
-package com.example.Library.system;
+package com.example.Library.system.Controllers;
 
+import com.example.Library.system.Entities.Book;
+import com.example.Library.system.Entities.Employee;
+import com.example.Library.system.Entities.Member;
+import com.example.Library.system.Repositories.BookRepository;
+import com.example.Library.system.Repositories.EmployeeRepository;
+import com.example.Library.system.Repositories.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

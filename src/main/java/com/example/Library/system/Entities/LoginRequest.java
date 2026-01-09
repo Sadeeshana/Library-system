@@ -1,4 +1,4 @@
-package com.example.Library.system;
+package com.example.Library.system.Entities;
 
 // This class holds the data from the React login form
 public class LoginRequest {

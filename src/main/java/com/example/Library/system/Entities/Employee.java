@@ -1,10 +1,9 @@
-package com.example.Library.system;
+package com.example.Library.system.Entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
 import jakarta.persistence.Table;
-import java.time.LocalDate;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 

@@ -1,4 +1,4 @@
-package com.example.Library.system;
+package com.example.Library.system.Entities;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
