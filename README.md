@@ -68,7 +68,6 @@ Library-system/
 - 🔁 **Borrow & Return**
   - Issue books to members
   - Record returns and update availability
-  - Basis for due‑date and fine features
 
 - 🧭 **Intuitive UI**
   - Separate pages/components for:
